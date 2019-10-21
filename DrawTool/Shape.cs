@@ -15,4 +15,22 @@ namespace DrawTool
         protected Pen myPen = new Pen(Color.Black);
         public abstract void Display(Graphics drawArea);
     }
+
+
+    //Creating and defining Circle
+    public class Circle : Shape
+    {
+        public Circle(int initX, int initY)
+            : base()
+        {
+            x = initX;
+            y = initY;
+        }
+        public override void Display(Graphics drawArea)
+        {
+            drawArea.DrawEllipse(myPen, x, y, size, size);
+        }
+    }
+
+
 }
