@@ -32,5 +32,20 @@ namespace DrawTool
         }
     }
 
+    //Creating and defining Square
+    public class Square : Shape
+    {
+        public Square(int initX, int initY)
+            : base()
+        {
+            x = initX;
+            y = initY;
+        }
+        public override void Display(Graphics drawArea)
+        {
+            drawArea.DrawEllipse(myPen, x, y, size, size);
+        }
+    }
+
 
 }
