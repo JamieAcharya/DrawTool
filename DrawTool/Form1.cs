@@ -123,6 +123,20 @@ namespace DrawTool
                     }
                 }
 
+                else if (command[0].Equals("clear"))
+                {
+                    group.Clear();
+                    pictureBox1.Image = null;
+                    pictureBox1.Refresh();
+
+                    continue;
+                }
+                else if (command[0].Equals("reset"))
+                {
+                    globalVariables.xCoords_Draw = 0;
+                    globalVariables.yCoords_Draw = 0;
+                    pictureBox1.Refresh();
+                }
 
 
             }
