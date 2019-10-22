@@ -34,6 +34,14 @@ namespace DrawTool
             group.Add(square);
             displayAll();
         }
+        private void DrawLine_Click(object sender, EventArgs e)
+        {
+            int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text);
+            int size = int.Parse(Size.Text);
+            Line line = new Line(x, y, size);
+            group.Add(line);
+            displayAll();
+        }
         private void displayAll()
         {
             Graphics paper = pictureBox1.CreateGraphics();
@@ -43,6 +51,6 @@ namespace DrawTool
             }
         }
 
-      
+        
     }
 }

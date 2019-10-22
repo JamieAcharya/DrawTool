@@ -39,6 +39,7 @@
             this.DrawSquare = new System.Windows.Forms.Button();
             this.sizeLabel = new System.Windows.Forms.Label();
             this.Size = new System.Windows.Forms.TextBox();
+            this.DrawLine = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,7 +113,7 @@
             // 
             // DrawSquare
             // 
-            this.DrawSquare.Location = new System.Drawing.Point(847, 201);
+            this.DrawSquare.Location = new System.Drawing.Point(847, 244);
             this.DrawSquare.Name = "DrawSquare";
             this.DrawSquare.Size = new System.Drawing.Size(127, 72);
             this.DrawSquare.TabIndex = 9;
@@ -136,11 +137,22 @@
             this.Size.Size = new System.Drawing.Size(100, 20);
             this.Size.TabIndex = 11;
             // 
+            // DrawLine
+            // 
+            this.DrawLine.Location = new System.Drawing.Point(847, 166);
+            this.DrawLine.Name = "DrawLine";
+            this.DrawLine.Size = new System.Drawing.Size(127, 72);
+            this.DrawLine.TabIndex = 12;
+            this.DrawLine.Text = "Draw Line";
+            this.DrawLine.UseVisualStyleBackColor = true;
+            this.DrawLine.Click += new System.EventHandler(this.DrawLine_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 559);
+            this.Controls.Add(this.DrawLine);
             this.Controls.Add(this.Size);
             this.Controls.Add(this.sizeLabel);
             this.Controls.Add(this.DrawSquare);
@@ -172,6 +184,7 @@
         private System.Windows.Forms.Button DrawSquare;
         private System.Windows.Forms.Label sizeLabel;
         private System.Windows.Forms.TextBox Size;
+        private System.Windows.Forms.Button DrawLine;
     }
 }
 
