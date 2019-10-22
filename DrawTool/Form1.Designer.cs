@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.commandLine = new System.Windows.Forms.TextBox();
+            this.run = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DrawCircle = new System.Windows.Forms.Button();
             this.xLabel = new System.Windows.Forms.Label();
@@ -43,22 +43,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox1
+            // commandLine
             // 
-            this.textBox1.Location = new System.Drawing.Point(35, 435);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(731, 90);
-            this.textBox1.TabIndex = 1;
+            this.commandLine.Location = new System.Drawing.Point(35, 435);
+            this.commandLine.Multiline = true;
+            this.commandLine.Name = "commandLine";
+            this.commandLine.Size = new System.Drawing.Size(731, 90);
+            this.commandLine.TabIndex = 1;
             // 
-            // button1
+            // run
             // 
-            this.button1.Location = new System.Drawing.Point(847, 435);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(124, 90);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Run Command/Program";
-            this.button1.UseVisualStyleBackColor = true;
+            this.run.Location = new System.Drawing.Point(847, 435);
+            this.run.Name = "run";
+            this.run.Size = new System.Drawing.Size(124, 90);
+            this.run.TabIndex = 2;
+            this.run.Text = "Run Command/Program";
+            this.run.UseVisualStyleBackColor = true;
+            this.run.Click += new System.EventHandler(this.run_Click);
             // 
             // pictureBox1
             // 
@@ -162,8 +163,8 @@
             this.Controls.Add(this.xLabel);
             this.Controls.Add(this.DrawCircle);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.run);
+            this.Controls.Add(this.commandLine);
             this.Name = "Form1";
             this.Text = "DrawTool";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -173,8 +174,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox commandLine;
+        private System.Windows.Forms.Button run;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button DrawCircle;
         private System.Windows.Forms.Label xLabel;

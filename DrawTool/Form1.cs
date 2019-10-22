@@ -12,15 +12,32 @@ namespace DrawTool
 {
     public partial class Form1 : Form
     {
+
+        public class globalVariables
+        {
+            //pen position drawing coords
+            public static float xCoords_Draw = 0;
+            public static float yCoords_Draw = 0;
+
+            //pen position coordinates
+            public static float moveTo_x = 0;
+            public static float moveTo_y = 0;
+
+        }
         private List<Shape> group = new List<Shape>();
         public Form1()
         {
             InitializeComponent();
         }
 
+
+
+
+
         private void DrawCircle_Click(object sender, EventArgs e)
         {
-            int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text);
+            //int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text); //getting coords straight from textbox
+            float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
             int size = int.Parse(Size.Text);
             Circle circle = new Circle(x, y, size);
             group.Add(circle);
@@ -42,6 +59,51 @@ namespace DrawTool
             group.Add(line);
             displayAll();
         }
+
+
+        //grab commands/text from command line
+        private void run_Click(object sender, EventArgs e)
+        {
+            foreach (string line in commandLine.Lines)
+            {
+                //stores commands in array and splits them by space 
+                string[] command = line.Split(' ');
+                //if moveTo command is entered overwrite starting coordinates
+                if (command[0].Equals("moveTo"))
+                {
+                    if (command.Length == 3) //check if the correct number of parameters have been given
+                    {
+                        if (ConvertMoveto(command[1], command[2]))  //convert from string to float
+                        {
+                            globalVariables.xCoords_Draw = globalVariables.moveTo_x;
+                            globalVariables.yCoords_Draw = globalVariables.moveTo_y;
+
+                            string txtXCOORD = globalVariables.xCoords_Draw.ToString();
+                            string txtYCOORD = globalVariables.yCoords_Draw.ToString();
+                            xCoord.Text = txtXCOORD;
+                            yCoord.Text = txtYCOORD;
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                        MessageBox.Show(argEx.Message + " moveTo command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+                }
+
+
+
+
+            }
+        }
+
+
+
         private void displayAll()
         {
             Graphics paper = pictureBox1.CreateGraphics();
@@ -51,6 +113,29 @@ namespace DrawTool
             }
         }
 
-        
+
+
+
+        public bool ConvertMoveto(string x, string y)
+        {
+            bool converted = true;
+
+            try
+            {
+                globalVariables.moveTo_x = (float)Convert.ToDouble(x);
+                globalVariables.moveTo_y = (float)Convert.ToDouble(y);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message + " Please Enter Numbers for Coordinates.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                converted = false;
+            }
+
+            return converted;
+        }
+
+
     }
 }
+
+

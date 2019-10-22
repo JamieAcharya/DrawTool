@@ -10,7 +10,7 @@ namespace DrawTool
     public abstract class Shape //Abstract Class
     {
         //Abstract method
-        protected int x, y;
+        protected float x, y;
         protected int size;
         protected Pen myPen = new Pen(Color.Black);
         public abstract void Display(Graphics drawArea);

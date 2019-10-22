@@ -10,7 +10,7 @@ namespace DrawTool
     //Creating and defining Circle
     public class Circle : Shape
     {
-        public Circle(int initX, int initY, int initSize)
+        public Circle(float initX, float initY, int initSize)
             : base()
         {
             x = initX;
