@@ -16,36 +16,6 @@ namespace DrawTool
         public abstract void Display(Graphics drawArea);
     }
 
-
-    //Creating and defining Circle
-    public class Circle : Shape
-    {
-        public Circle(int initX, int initY)
-            : base()
-        {
-            x = initX;
-            y = initY;
-        }
-        public override void Display(Graphics drawArea)
-        {
-            drawArea.DrawEllipse(myPen, x, y, size, size);
-        }
-    }
-
-    //Creating and defining Square
-    public class Square : Shape
-    {
-        public Square(int initX, int initY)
-            : base()
-        {
-            x = initX;
-            y = initY;
-        }
-        public override void Display(Graphics drawArea)
-        {
-            drawArea.DrawEllipse(myPen, x, y, size, size);
-        }
-    }
-
+  
 
 }
