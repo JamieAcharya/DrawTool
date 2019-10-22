@@ -37,6 +37,8 @@
             this.xCoord = new System.Windows.Forms.TextBox();
             this.yCoord = new System.Windows.Forms.TextBox();
             this.DrawSquare = new System.Windows.Forms.Button();
+            this.sizeLabel = new System.Windows.Forms.Label();
+            this.Size = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -118,11 +120,29 @@
             this.DrawSquare.UseVisualStyleBackColor = true;
             this.DrawSquare.Click += new System.EventHandler(this.DrawSquare_Click);
             // 
+            // sizeLabel
+            // 
+            this.sizeLabel.AutoSize = true;
+            this.sizeLabel.Location = new System.Drawing.Point(847, 79);
+            this.sizeLabel.Name = "sizeLabel";
+            this.sizeLabel.Size = new System.Drawing.Size(33, 13);
+            this.sizeLabel.TabIndex = 10;
+            this.sizeLabel.Text = "Size: ";
+            // 
+            // Size
+            // 
+            this.Size.Location = new System.Drawing.Point(895, 76);
+            this.Size.Name = "Size";
+            this.Size.Size = new System.Drawing.Size(100, 20);
+            this.Size.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 559);
+            this.Controls.Add(this.Size);
+            this.Controls.Add(this.sizeLabel);
             this.Controls.Add(this.DrawSquare);
             this.Controls.Add(this.yCoord);
             this.Controls.Add(this.xCoord);
@@ -150,6 +170,8 @@
         private System.Windows.Forms.TextBox xCoord;
         private System.Windows.Forms.TextBox yCoord;
         private System.Windows.Forms.Button DrawSquare;
+        private System.Windows.Forms.Label sizeLabel;
+        private System.Windows.Forms.TextBox Size;
     }
 }
 

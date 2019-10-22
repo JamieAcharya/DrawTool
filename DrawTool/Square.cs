@@ -10,11 +10,13 @@ namespace DrawTool
     //Creating and defining Square
     public class Square : Shape
     {
-        public Square(int initX, int initY)
+        public Square(int initX, int initY, int initSize)
             : base()
         {
             x = initX;
             y = initY;
+            size = initSize;
+
         }
         public override void Display(Graphics drawArea)
         {

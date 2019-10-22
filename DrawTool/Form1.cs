@@ -21,14 +21,16 @@ namespace DrawTool
         private void DrawCircle_Click(object sender, EventArgs e)
         {
             int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text);
-            Circle circle = new Circle(x, y);
+            int size = int.Parse(Size.Text);
+            Circle circle = new Circle(x, y, size);
             group.Add(circle);
             displayAll();
         }
         private void DrawSquare_Click(object sender, EventArgs e)
         {
             int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text);
-            Square square = new Square(x, y);
+            int size = int.Parse(Size.Text);
+            Square square = new Square(x, y, size);
             group.Add(square);
             displayAll();
         }

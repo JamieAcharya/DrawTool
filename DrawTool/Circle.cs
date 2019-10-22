@@ -10,11 +10,12 @@ namespace DrawTool
     //Creating and defining Circle
     public class Circle : Shape
     {
-        public Circle(int initX, int initY)
+        public Circle(int initX, int initY, int initSize)
             : base()
         {
             x = initX;
             y = initY;
+            size = initSize;
         }
         public override void Display(Graphics drawArea)
         {
