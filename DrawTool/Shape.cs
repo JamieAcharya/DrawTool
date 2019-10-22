@@ -11,7 +11,7 @@ namespace DrawTool
     {
         //Abstract method
         protected int x, y;
-        protected int size = 10;
+        protected int size = 20;
         protected Pen myPen = new Pen(Color.Black);
         public abstract void Display(Graphics drawArea);
     }

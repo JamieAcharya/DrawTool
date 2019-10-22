@@ -36,6 +36,7 @@
             this.yLabel = new System.Windows.Forms.Label();
             this.xCoord = new System.Windows.Forms.TextBox();
             this.yCoord = new System.Windows.Forms.TextBox();
+            this.DrawSquare = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,11 +108,22 @@
             this.yCoord.Size = new System.Drawing.Size(100, 20);
             this.yCoord.TabIndex = 8;
             // 
+            // DrawSquare
+            // 
+            this.DrawSquare.Location = new System.Drawing.Point(847, 201);
+            this.DrawSquare.Name = "DrawSquare";
+            this.DrawSquare.Size = new System.Drawing.Size(127, 72);
+            this.DrawSquare.TabIndex = 9;
+            this.DrawSquare.Text = "Draw Square";
+            this.DrawSquare.UseVisualStyleBackColor = true;
+            this.DrawSquare.Click += new System.EventHandler(this.DrawSquare_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 559);
+            this.Controls.Add(this.DrawSquare);
             this.Controls.Add(this.yCoord);
             this.Controls.Add(this.xCoord);
             this.Controls.Add(this.yLabel);
@@ -137,6 +149,7 @@
         private System.Windows.Forms.Label yLabel;
         private System.Windows.Forms.TextBox xCoord;
         private System.Windows.Forms.TextBox yCoord;
+        private System.Windows.Forms.Button DrawSquare;
     }
 }
 

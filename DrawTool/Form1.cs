@@ -25,7 +25,13 @@ namespace DrawTool
             group.Add(circle);
             displayAll();
         }
-
+        private void DrawSquare_Click(object sender, EventArgs e)
+        {
+            int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text);
+            Square square = new Square(x, y);
+            group.Add(square);
+            displayAll();
+        }
         private void displayAll()
         {
             Graphics paper = pictureBox1.CreateGraphics();
@@ -35,5 +41,6 @@ namespace DrawTool
             }
         }
 
+      
     }
 }
