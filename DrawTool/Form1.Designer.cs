@@ -31,6 +31,11 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.DrawCircle = new System.Windows.Forms.Button();
+            this.xLabel = new System.Windows.Forms.Label();
+            this.yLabel = new System.Windows.Forms.Label();
+            this.xCoord = new System.Windows.Forms.TextBox();
+            this.yCoord = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,11 +65,58 @@
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
+            // DrawCircle
+            // 
+            this.DrawCircle.Location = new System.Drawing.Point(850, 322);
+            this.DrawCircle.Name = "DrawCircle";
+            this.DrawCircle.Size = new System.Drawing.Size(124, 72);
+            this.DrawCircle.TabIndex = 4;
+            this.DrawCircle.Text = "Draw Circle";
+            this.DrawCircle.UseVisualStyleBackColor = true;
+            this.DrawCircle.Click += new System.EventHandler(this.DrawCircle_Click);
+            // 
+            // xLabel
+            // 
+            this.xLabel.AutoSize = true;
+            this.xLabel.Location = new System.Drawing.Point(844, 12);
+            this.xLabel.Name = "xLabel";
+            this.xLabel.Size = new System.Drawing.Size(45, 13);
+            this.xLabel.TabIndex = 5;
+            this.xLabel.Text = "XCoord:";
+            // 
+            // yLabel
+            // 
+            this.yLabel.AutoSize = true;
+            this.yLabel.Location = new System.Drawing.Point(844, 46);
+            this.yLabel.Name = "yLabel";
+            this.yLabel.Size = new System.Drawing.Size(45, 13);
+            this.yLabel.TabIndex = 6;
+            this.yLabel.Text = "YCoord:";
+            // 
+            // xCoord
+            // 
+            this.xCoord.Location = new System.Drawing.Point(895, 12);
+            this.xCoord.Name = "xCoord";
+            this.xCoord.Size = new System.Drawing.Size(100, 20);
+            this.xCoord.TabIndex = 7;
+            // 
+            // yCoord
+            // 
+            this.yCoord.Location = new System.Drawing.Point(895, 43);
+            this.yCoord.Name = "yCoord";
+            this.yCoord.Size = new System.Drawing.Size(100, 20);
+            this.yCoord.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 559);
+            this.Controls.Add(this.yCoord);
+            this.Controls.Add(this.xCoord);
+            this.Controls.Add(this.yLabel);
+            this.Controls.Add(this.xLabel);
+            this.Controls.Add(this.DrawCircle);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
@@ -80,6 +132,11 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button DrawCircle;
+        private System.Windows.Forms.Label xLabel;
+        private System.Windows.Forms.Label yLabel;
+        private System.Windows.Forms.TextBox xCoord;
+        private System.Windows.Forms.TextBox yCoord;
     }
 }
 

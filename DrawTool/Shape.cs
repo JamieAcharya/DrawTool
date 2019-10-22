@@ -15,7 +15,4 @@ namespace DrawTool
         protected Pen myPen = new Pen(Color.Black);
         public abstract void Display(Graphics drawArea);
     }
-
-  
-
 }
