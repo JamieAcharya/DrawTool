@@ -23,6 +23,10 @@ namespace DrawTool
             public static float moveTo_x = 0;
             public static float moveTo_y = 0;
 
+            //circle variables
+            public static float circle_size { get; set; }
+
+
         }
         private List<Shape> group = new List<Shape>();
         public Form1()
@@ -92,10 +96,32 @@ namespace DrawTool
                         MessageBox.Show(argEx.Message + " moveTo command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-
-
                 }
+                else if (command[0].Equals("circle"))
+                {
+                    if (command.Length == 2)
+                    {
+                        if (ConvertCircleParameters(command[1]))
+                        {
+                            float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                            string circle_size = globalVariables.circle_size.ToString();
+                            int size = (int)globalVariables.circle_size;
 
+                            Circle circle = new Circle(x, y, size);
+                            group.Add(circle);
+                            pictureBox1.Refresh();
+                            displayAll();
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                        MessageBox.Show(argEx.Message + " circle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
 
 
 
@@ -134,8 +160,26 @@ namespace DrawTool
             return converted;
         }
 
+        public bool ConvertCircleParameters(string size)
+        {
+            bool converted = false;
+
+            try
+            {
+                globalVariables.circle_size = (float)Convert.ToDouble(size);
+                converted = true;
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message + "Ensure Circle Size is a number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return converted;
+        }
 
     }
 }
+
+
 
 
