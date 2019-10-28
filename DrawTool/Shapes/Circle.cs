@@ -11,7 +11,7 @@ namespace DrawTool
     public class Circle : Shape
     {
         public Circle(float initX, float initY, int initSize)
-            : base()
+            : base(initX, initY)
         {
             x = initX;
             y = initY;

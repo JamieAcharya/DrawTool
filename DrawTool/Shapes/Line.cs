@@ -9,8 +9,8 @@ namespace DrawTool
 {
     public class Line : Shape
     {
-        public Line(int initX, int initY, int initSize)
-            : base()
+        public Line(float initX, float initY, int initSize)
+            : base(initX, initY)
         {
             x = initX;
             y = initY;

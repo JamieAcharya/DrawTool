@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-    //Creating and defining Square
-    public class Square : Shape
+    //Creating and defining Circle
+    public class Rectangle : Shape
     {
-        public Square(float initX, float initY, int initSize)
+        public Rectangle(float initX, float initY, float initHeight, float initWidth)
             : base(initX, initY)
         {
+            height = initHeight;
+            width = initWidth;
             x = initX;
             y = initY;
-            size = initSize;
-
         }
         public override void Display(Graphics drawArea)
         {
-            drawArea.DrawRectangle(myPen, x, y, size, size);
+            drawArea.DrawRectangle(myPen, x, y, width, height);
         }
     }
-
 }
