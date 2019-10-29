@@ -26,9 +26,9 @@ namespace DrawTool
         public virtual void set(params float[] list)
         {
 
-            x = list[1];
-            y = list[2];
+         
         }
+        protected float P1,P2,P3;
 
     }
 }

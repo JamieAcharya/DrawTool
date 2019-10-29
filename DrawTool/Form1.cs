@@ -36,13 +36,15 @@ namespace DrawTool
             public static float rectangle_height { get; set; }
 
             //triangle variables
-            public static int triangle_width { get; set; }
-            public static int triangle_height { get; set; }
+            public static int p1 { get; set; }
+            public static int p2 { get; set; }
+            public static int p3 { get; set; }
+
             public static int width;
             public static int height;
-            public static Point p1;
-            public static Point p2;
-            public static Point p3;
+           
+            Point[] polygonPoints = new Point[6];
+            
             //line variable
             public static float line_size { get; set; }
             public static float line_x1 = 0;
@@ -85,6 +87,21 @@ namespace DrawTool
             displayAll();
         }
 
+         private void drawTriangle_Click(object sender, EventArgs e)
+        {
+            Point[] trianglePoints = new Point[3];
+            trianglePoints[0] = new Point(50, 150);
+            trianglePoints[1] = new Point(20, 65);
+            trianglePoints[2] = new Point(100, 10);
+            float P1 = 0;
+            float P2 = 100;
+            float P3 = 50;
+            Triangle triangle = new Triangle(trianglePoints);
+            group.Add(triangle);
+            displayAll();
+
+
+        }
 
         //grab commands/text from command line
         private void run_Click(object sender, EventArgs e)
@@ -199,45 +216,42 @@ namespace DrawTool
                 }
                 else if (command[0].Equals("triangle"))
                 {
-                    string width;
-                    string height;
-
+                    string p1, p2, p3;
 
                     try
                     {
-                        width = command[1];
-                        height = command[2];
+                        p1 = command[1];
+                        p2 = command[2];
+                        p3 = command[3];
                     }
                     catch (IndexOutOfRangeException ex)
                     {
                         MessageBox.Show(ex.Message + " triangle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                     }
+                
+                        globalVariables.p1 = Convert.ToInt32(p1);
+                        globalVariables.p2 = Convert.ToInt32(p2);
+                        globalVariables.p3 = Convert.ToInt32(p3);
+        
+                        Point[] trianglePoints = new Point[3];
+                        
+                        trianglePoints[0] = new Point((int)globalVariables.xCoords_Draw, (int)globalVariables.yCoords_Draw);
+                        trianglePoints[1] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p2, (int)globalVariables.yCoords_Draw);
+                        trianglePoints[2] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p3, (int)globalVariables.yCoords_Draw - globalVariables.p3);
 
-                    if (ConvertTriangleWidthHeight(width, height))
-                    {
-                        globalVariables.p1.X = (int)globalVariables.xCoords_Draw;
-                        globalVariables.p1.Y = (int)globalVariables.yCoords_Draw;
-
-                        globalVariables.p2.X = (int)globalVariables.xCoords_Draw + globalVariables.triangle_width;
-                        globalVariables.p2.Y = (int)globalVariables.yCoords_Draw;
-
-                        globalVariables.p3.X = (int)globalVariables.xCoords_Draw + globalVariables.triangle_width;
-                        globalVariables.p3.Y = (int)globalVariables.yCoords_Draw - globalVariables.triangle_height;
-                    }
-
-                    Triangle triangle = new Triangle(globalVariables.xCoords_Draw, globalVariables.yCoords_Draw, globalVariables.p1.X, globalVariables.p1.Y, globalVariables.p2.X, globalVariables.p2.Y, globalVariables.p3.X, globalVariables.p3.Y);
-                    group.Add(triangle);
-                    pictureBox1.Refresh();
-                    displayAll();
-
-                    continue;
+                        Triangle triangle = new Triangle(trianglePoints);
+                        group.Add(triangle);
+                        displayAll();
+                        continue;
+                    
+                    
                 }
 
                 else if (command[0].Equals("clear"))
                 {
-                    globalVariables.xCoords_Draw = 0;
-                    globalVariables.yCoords_Draw = 0;
+                   // globalVariables.xCoords_Draw = 0;
+                   // globalVariables.yCoords_Draw = 0;
                     group.Clear();
                     //pictureBox1.Image = null;
                     pictureBox1.Refresh();
@@ -246,9 +260,14 @@ namespace DrawTool
                 }
                 else if (command[0].Equals("reset"))
                 {
+
                     globalVariables.xCoords_Draw = 0;
                     globalVariables.yCoords_Draw = 0;
-                    pictureBox1.Refresh();
+                    string txtXCOORD = globalVariables.xCoords_Draw.ToString();
+                    string txtYCOORD = globalVariables.yCoords_Draw.ToString();
+                    xCoord.Text = txtXCOORD;
+                    yCoord.Text = txtYCOORD;
+                    //pictureBox1.Refresh();
 
                     continue;
                 }
@@ -340,24 +359,14 @@ namespace DrawTool
 
             return converted;
         }
-        public bool ConvertTriangleWidthHeight(string width, string height)
-        {
-            bool converted = false;
-            try
-            {
-                globalVariables.triangle_width = Convert.ToInt32(width);
-                globalVariables.triangle_height = Convert.ToInt32(height);
-                //globalVariables.width = Convert.ToInt32(width);
-                //globalVariables.height = Convert.ToInt32(height);
 
-                converted = true;
-            }
-            catch (FormatException ex)
-            {
-                MessageBox.Show(ex.Message + " width/height not number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return converted;
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
         }
+
+       
     }
 }
 
