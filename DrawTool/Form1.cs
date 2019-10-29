@@ -39,9 +39,6 @@ namespace DrawTool
             public static int p1 { get; set; }
             public static int p2 { get; set; }
             public static int p3 { get; set; }
-
-            public static int width;
-            public static int height;
            
             Point[] polygonPoints = new Point[6];
             
@@ -360,13 +357,29 @@ namespace DrawTool
             return converted;
         }
 
-
+        //Exit Button Event (Exits Program)
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
         }
 
-       
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            System.IO.File.WriteAllText(path, commandLine.Text);
+            //System.IO.File.WriteAllText("C:\\Users\\User\\Desktop\\drawTool.dat", commandLine.Text);
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //load file and insert into commandLine textbox
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string s = System.IO.File.ReadAllText(ofd.FileName);
+                commandLine.Text = s;
+            }
+        }
     }
 }
 
