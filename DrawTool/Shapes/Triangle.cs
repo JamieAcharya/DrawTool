@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-    //Creating and defining Circle
+    //Creating and defining Triangle
     public class Triangle : Shape
     {
-        PointF[] pnt;
         private Point[] trianglePoints;
 
         public Triangle()

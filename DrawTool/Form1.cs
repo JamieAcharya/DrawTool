@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +42,7 @@ namespace DrawTool
             public static int p2 { get; set; }
             public static int p3 { get; set; }
            
-            Point[] polygonPoints = new Point[6];
+            
             
             //line variable
             public static float line_size { get; set; }
@@ -90,9 +92,6 @@ namespace DrawTool
             trianglePoints[0] = new Point(50, 150);
             trianglePoints[1] = new Point(20, 65);
             trianglePoints[2] = new Point(100, 10);
-            float P1 = 0;
-            float P2 = 100;
-            float P3 = 50;
             Triangle triangle = new Triangle(trianglePoints);
             group.Add(triangle);
             displayAll();
@@ -108,8 +107,8 @@ namespace DrawTool
                 //stores commands in array and splits them by space 
                 string[] command = line.Split(' ');
                 //if moveTo command is entered overwrite starting coordinates
-                if (command[0].Equals("moveTo"))
-                {
+                if (command[0].ToLower().Equals("moveTo"))
+                { 
                     if (command.Length == 3) //check if the correct number of parameters have been given
                     {
                         if (ConvertMoveto(command[1], command[2]))  //convert from string to float
@@ -132,7 +131,7 @@ namespace DrawTool
                         return;
                     }
                 }
-                else if (command[0].Equals("circle"))
+                else if (command[0].ToLower().Equals("circle"))
                 {
                     if (command.Length == 2)
                     {
@@ -158,7 +157,7 @@ namespace DrawTool
                     }
                 }
 
-                else if (command[0].Equals("square"))
+                else if (command[0].ToLower().Equals("square"))
                 {
                     if (command.Length == 2)
                     {
@@ -179,12 +178,12 @@ namespace DrawTool
                     else
                     {
                         IndexOutOfRangeException argEx = new IndexOutOfRangeException();
-                        MessageBox.Show(argEx.Message + " circle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(argEx.Message + " square command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
 
-                else if (command[0].Equals("rectangle"))
+                else if (command[0].ToLower().Equals("rectangle"))
                 {
                     if (command.Length == 3)
                     {
@@ -207,11 +206,11 @@ namespace DrawTool
                     else
                     {
                         IndexOutOfRangeException argEx = new IndexOutOfRangeException();
-                        MessageBox.Show(argEx.Message + " circle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(argEx.Message + " rectangle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
-                else if (command[0].Equals("triangle"))
+                else if (command[0].ToLower().Equals("triangle"))
                 {
                     string p1, p2, p3;
 
@@ -245,7 +244,7 @@ namespace DrawTool
                     
                 }
 
-                else if (command[0].Equals("clear"))
+                else if (command[0].ToLower().Equals("clear"))
                 {
                    // globalVariables.xCoords_Draw = 0;
                    // globalVariables.yCoords_Draw = 0;
@@ -255,7 +254,7 @@ namespace DrawTool
 
                     continue;
                 }
-                else if (command[0].Equals("reset"))
+                else if (command[0].ToLower().Equals("reset"))
                 {
 
                     globalVariables.xCoords_Draw = 0;
@@ -268,7 +267,11 @@ namespace DrawTool
 
                     continue;
                 }
-
+                else
+                {
+                    MessageBox.Show("Please Enter A vaild Command, see Help for command options", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                }
 
             }
         }
@@ -365,8 +368,18 @@ namespace DrawTool
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            System.IO.File.WriteAllText(path, commandLine.Text);
+            SaveFileDialog save = new SaveFileDialog();
+            save.FileName = "DrawTool.dat";
+            save.Filter = "Text File | *.dat";
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(save.OpenFile());
+                writer.WriteLine(commandLine.Text);
+                writer.Dispose();
+                writer.Close();
+
+            }
+           // System.IO.File.WriteAllText(path, commandLine.Text);
             //System.IO.File.WriteAllText("C:\\Users\\User\\Desktop\\drawTool.dat", commandLine.Text);
         }
 
@@ -379,6 +392,35 @@ namespace DrawTool
                 string s = System.IO.File.ReadAllText(ofd.FileName);
                 commandLine.Text = s;
             }
+        }
+        private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /*
+            //pictureBox1.Image.Save(@"C:\Users\User\Desktop\drawTool.jpg", ImageFormat.Jpeg);
+            SaveFileDialog save = new SaveFileDialog();
+            save.FileName = "DrawToolImage.Jpeg";
+            save.Filter = "Image File | *.Jpeg";
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Image.Save(save.InitialDirectory, ImageFormat.Jpeg);
+                
+            }
+            */
+        }
+
+        private void commandExamplesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            Size.Text = trackBar1.Value.ToString();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -43,13 +43,16 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.commandExamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawTriangle = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // commandLine
@@ -62,9 +65,9 @@
             // 
             // run
             // 
-            this.run.Location = new System.Drawing.Point(847, 435);
+            this.run.Location = new System.Drawing.Point(844, 435);
             this.run.Name = "run";
-            this.run.Size = new System.Drawing.Size(124, 90);
+            this.run.Size = new System.Drawing.Size(127, 90);
             this.run.TabIndex = 2;
             this.run.Text = "Run Command/Program";
             this.run.UseVisualStyleBackColor = true;
@@ -81,9 +84,9 @@
             // 
             // DrawCircle
             // 
-            this.DrawCircle.Location = new System.Drawing.Point(850, 322);
+            this.DrawCircle.Location = new System.Drawing.Point(844, 357);
             this.DrawCircle.Name = "DrawCircle";
-            this.DrawCircle.Size = new System.Drawing.Size(124, 72);
+            this.DrawCircle.Size = new System.Drawing.Size(127, 72);
             this.DrawCircle.TabIndex = 4;
             this.DrawCircle.Text = "Draw Circle";
             this.DrawCircle.UseVisualStyleBackColor = true;
@@ -113,6 +116,7 @@
             this.xCoord.Name = "xCoord";
             this.xCoord.Size = new System.Drawing.Size(100, 20);
             this.xCoord.TabIndex = 7;
+            this.xCoord.Text = "0";
             // 
             // yCoord
             // 
@@ -120,10 +124,11 @@
             this.yCoord.Name = "yCoord";
             this.yCoord.Size = new System.Drawing.Size(100, 20);
             this.yCoord.TabIndex = 8;
+            this.yCoord.Text = "0";
             // 
             // DrawSquare
             // 
-            this.DrawSquare.Location = new System.Drawing.Point(847, 244);
+            this.DrawSquare.Location = new System.Drawing.Point(844, 279);
             this.DrawSquare.Name = "DrawSquare";
             this.DrawSquare.Size = new System.Drawing.Size(127, 72);
             this.DrawSquare.TabIndex = 9;
@@ -146,10 +151,11 @@
             this.Size.Name = "Size";
             this.Size.Size = new System.Drawing.Size(100, 20);
             this.Size.TabIndex = 11;
+            this.Size.Text = "0";
             // 
             // DrawLine
             // 
-            this.DrawLine.Location = new System.Drawing.Point(847, 166);
+            this.DrawLine.Location = new System.Drawing.Point(844, 201);
             this.DrawLine.Name = "DrawLine";
             this.DrawLine.Size = new System.Drawing.Size(127, 72);
             this.DrawLine.TabIndex = 12;
@@ -172,6 +178,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
+            this.saveImageToolStripMenuItem,
             this.loadToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -181,21 +188,28 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.saveToolStripMenuItem.Text = "Save Program";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveImageToolStripMenuItem
+            // 
+            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.saveImageToolStripMenuItem.Text = "Save Image";
+            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -212,16 +226,27 @@
             this.commandExamplesToolStripMenuItem.Name = "commandExamplesToolStripMenuItem";
             this.commandExamplesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.commandExamplesToolStripMenuItem.Text = "Command Examples";
+            this.commandExamplesToolStripMenuItem.Click += new System.EventHandler(this.commandExamplesToolStripMenuItem_Click);
             // 
             // drawTriangle
             // 
-            this.drawTriangle.Location = new System.Drawing.Point(850, 109);
+            this.drawTriangle.Location = new System.Drawing.Point(844, 144);
             this.drawTriangle.Name = "drawTriangle";
-            this.drawTriangle.Size = new System.Drawing.Size(121, 51);
+            this.drawTriangle.Size = new System.Drawing.Size(127, 51);
             this.drawTriangle.TabIndex = 14;
             this.drawTriangle.Text = "Draw Triangle";
             this.drawTriangle.UseVisualStyleBackColor = true;
             this.drawTriangle.Click += new System.EventHandler(this.drawTriangle_Click);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(895, 102);
+            this.trackBar1.Maximum = 1000;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(100, 45);
+            this.trackBar1.TabIndex = 15;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // Form1
             // 
@@ -242,12 +267,14 @@
             this.Controls.Add(this.run);
             this.Controls.Add(this.commandLine);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.trackBar1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "DrawTool";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,6 +301,8 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem commandExamplesToolStripMenuItem;
         private System.Windows.Forms.Button drawTriangle;
+        private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
 
