@@ -79,6 +79,7 @@ namespace DrawTool
         }
         private void DrawLine_Click(object sender, EventArgs e)
         {
+
             int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text);
             int size = int.Parse(Size.Text);
             Line line = new Line(x, y, size);
@@ -107,8 +108,8 @@ namespace DrawTool
                 //stores commands in array and splits them by space 
                 string[] command = line.Split(' ');
                 //if moveTo command is entered overwrite starting coordinates
-                if (command[0].ToLower().Equals("moveTo"))
-                { 
+                if (command[0].ToLower().Equals("moveto"))
+                {
                     if (command.Length == 3) //check if the correct number of parameters have been given
                     {
                         if (ConvertMoveto(command[1], command[2]))  //convert from string to float
@@ -129,6 +130,18 @@ namespace DrawTool
                         IndexOutOfRangeException argEx = new IndexOutOfRangeException();
                         MessageBox.Show(argEx.Message + " moveTo command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
+                    }
+                }
+                else if (command[0].ToLower().Equals("drawto"))
+                {
+                    if (command.Length == 3)
+                    {
+                        int x = int.Parse(command[1]);
+                        int y = int.Parse(command[2]);
+                        int size = int.Parse(Size.Text);
+
+                        group.Add(new Line(x, y, size));
+                        displayAll();
                     }
                 }
                 else if (command[0].ToLower().Equals("circle"))
@@ -225,29 +238,29 @@ namespace DrawTool
                         MessageBox.Show(ex.Message + " triangle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                     }
-                
-                        globalVariables.p1 = Convert.ToInt32(p1);
-                        globalVariables.p2 = Convert.ToInt32(p2);
-                        globalVariables.p3 = Convert.ToInt32(p3);
-        
-                        Point[] trianglePoints = new Point[3];
-                        
-                        trianglePoints[0] = new Point((int)globalVariables.xCoords_Draw, (int)globalVariables.yCoords_Draw);
-                        trianglePoints[1] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p2, (int)globalVariables.yCoords_Draw);
-                        trianglePoints[2] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p3, (int)globalVariables.yCoords_Draw - globalVariables.p3);
 
-                        Triangle triangle = new Triangle(trianglePoints);
-                        group.Add(triangle);
-                        displayAll();
-                        continue;
-                    
-                    
+                    globalVariables.p1 = Convert.ToInt32(p1);
+                    globalVariables.p2 = Convert.ToInt32(p2);
+                    globalVariables.p3 = Convert.ToInt32(p3);
+
+                    Point[] trianglePoints = new Point[3];
+
+                    trianglePoints[0] = new Point((int)globalVariables.xCoords_Draw, (int)globalVariables.yCoords_Draw);
+                    trianglePoints[1] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p2, (int)globalVariables.yCoords_Draw);
+                    trianglePoints[2] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p3, (int)globalVariables.yCoords_Draw - globalVariables.p3);
+
+                    Triangle triangle = new Triangle(trianglePoints);
+                    group.Add(triangle);
+                    displayAll();
+                    continue;
+
+
                 }
 
                 else if (command[0].ToLower().Equals("clear"))
                 {
-                   // globalVariables.xCoords_Draw = 0;
-                   // globalVariables.yCoords_Draw = 0;
+                    // globalVariables.xCoords_Draw = 0;
+                    // globalVariables.yCoords_Draw = 0;
                     group.Clear();
                     //pictureBox1.Image = null;
                     pictureBox1.Refresh();
@@ -275,9 +288,6 @@ namespace DrawTool
 
             }
         }
-
-
-
         private void displayAll()
         {
             Graphics paper = pictureBox1.CreateGraphics();
@@ -418,9 +428,201 @@ namespace DrawTool
             Size.Text = trackBar1.Value.ToString();
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
 
+        private void runProgram()
+        {
+            foreach (string line in instantCommand.Lines)
+            {
+                //stores commands in array and splits them by space 
+                string[] command = line.Split(' ');
+                //if moveTo command is entered overwrite starting coordinates
+                if (command[0].ToLower().Equals("moveto"))
+                {
+                    if (command.Length == 3) //check if the correct number of parameters have been given
+                    {
+                        if (ConvertMoveto(command[1], command[2]))  //convert from string to float
+                        {
+                            globalVariables.xCoords_Draw = globalVariables.moveTo_x;
+                            globalVariables.yCoords_Draw = globalVariables.moveTo_y;
+
+                            string txtXCOORD = globalVariables.xCoords_Draw.ToString();
+                            string txtYCOORD = globalVariables.yCoords_Draw.ToString();
+                            xCoord.Text = txtXCOORD;
+                            yCoord.Text = txtYCOORD;
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                        MessageBox.Show(argEx.Message + " moveTo command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                else if (command[0].ToLower().Equals("drawto"))
+                {
+                    if (command.Length == 3)
+                    {
+                        int x = int.Parse(command[1]);
+                        int y = int.Parse(command[2]);
+                        int size = int.Parse(Size.Text);
+
+                        group.Add(new Line(x, y, size));
+                        displayAll();
+                    }
+                }
+                else if (command[0].ToLower().Equals("circle"))
+                {
+                    if (command.Length == 2)
+                    {
+                        if (ConvertCircleParameters(command[1]))
+                        {
+                            float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                            string circle_size = globalVariables.circle_size.ToString();
+                            int size = (int)globalVariables.circle_size;
+
+                            Circle circle = new Circle(x, y, size);
+                            group.Add(circle);
+                            pictureBox1.Refresh();
+                            displayAll();
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                        MessageBox.Show(argEx.Message + " circle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                else if (command[0].ToLower().Equals("square"))
+                {
+                    if (command.Length == 2)
+                    {
+                        if (ConvertSquareParameters(command[1]))
+                        {
+                            float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                            string square_size = globalVariables.square_size.ToString();
+                            int size = (int)globalVariables.square_size;
+
+                            Square square = new Square(x, y, size);
+                            group.Add(square);
+                            pictureBox1.Refresh();
+                            displayAll();
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                        MessageBox.Show(argEx.Message + " square command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                else if (command[0].ToLower().Equals("rectangle"))
+                {
+                    if (command.Length == 3)
+                    {
+                        if (ConvertRectangleParameters(command[1], command[2]))
+                        {
+                            float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                            string rectangle_height = globalVariables.rectangle_height.ToString();
+                            string rectangle_width = globalVariables.rectangle_width.ToString();
+                            int height = (int)globalVariables.rectangle_height;
+                            int width = (int)globalVariables.rectangle_width;
+
+                            Rectangle rectangle = new Rectangle(x, y, height, width);
+                            group.Add(rectangle);
+                            pictureBox1.Refresh();
+                            displayAll();
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                        MessageBox.Show(argEx.Message + " rectangle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                else if (command[0].ToLower().Equals("triangle"))
+                {
+                    string p1, p2, p3;
+
+                    try
+                    {
+                        p1 = command[1];
+                        p2 = command[2];
+                        p3 = command[3];
+                    }
+                    catch (IndexOutOfRangeException ex)
+                    {
+                        MessageBox.Show(ex.Message + " triangle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    }
+
+                    globalVariables.p1 = Convert.ToInt32(p1);
+                    globalVariables.p2 = Convert.ToInt32(p2);
+                    globalVariables.p3 = Convert.ToInt32(p3);
+
+                    Point[] trianglePoints = new Point[3];
+
+                    trianglePoints[0] = new Point((int)globalVariables.xCoords_Draw, (int)globalVariables.yCoords_Draw);
+                    trianglePoints[1] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p2, (int)globalVariables.yCoords_Draw);
+                    trianglePoints[2] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p3, (int)globalVariables.yCoords_Draw - globalVariables.p3);
+
+                    Triangle triangle = new Triangle(trianglePoints);
+                    group.Add(triangle);
+                    displayAll();
+                    continue;
+
+
+                }
+
+                else if (command[0].ToLower().Equals("clear"))
+                {
+                    // globalVariables.xCoords_Draw = 0;
+                    // globalVariables.yCoords_Draw = 0;
+                    group.Clear();
+                    //pictureBox1.Image = null;
+                    pictureBox1.Refresh();
+
+                    continue;
+                }
+                else if (command[0].ToLower().Equals("reset"))
+                {
+
+                    globalVariables.xCoords_Draw = 0;
+                    globalVariables.yCoords_Draw = 0;
+                    string txtXCOORD = globalVariables.xCoords_Draw.ToString();
+                    string txtYCOORD = globalVariables.yCoords_Draw.ToString();
+                    xCoord.Text = txtXCOORD;
+                    yCoord.Text = txtYCOORD;
+                    //pictureBox1.Refresh();
+
+                    continue;
+                }
+                else
+                {
+                    MessageBox.Show("Please Enter A vaild Command, see Help for command options", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                }
+
+            }
+        }
+        private void instantCommand_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                runProgram();
+                instantCommand.Text = "";
+            }
         }
     }
 }

@@ -50,6 +50,9 @@
             this.commandExamplesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawTriangle = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.instantCommand = new System.Windows.Forms.TextBox();
+            this.commandLabel = new System.Windows.Forms.Label();
+            this.programLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -57,7 +60,7 @@
             // 
             // commandLine
             // 
-            this.commandLine.Location = new System.Drawing.Point(35, 435);
+            this.commandLine.Location = new System.Drawing.Point(63, 435);
             this.commandLine.Multiline = true;
             this.commandLine.Name = "commandLine";
             this.commandLine.Size = new System.Drawing.Size(731, 90);
@@ -76,7 +79,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox1.Location = new System.Drawing.Point(35, 37);
+            this.pictureBox1.Location = new System.Drawing.Point(63, 37);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(731, 392);
             this.pictureBox1.TabIndex = 3;
@@ -245,14 +248,42 @@
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(100, 45);
             this.trackBar1.TabIndex = 15;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
+            // 
+            // instantCommand
+            // 
+            this.instantCommand.Location = new System.Drawing.Point(63, 531);
+            this.instantCommand.Name = "instantCommand";
+            this.instantCommand.Size = new System.Drawing.Size(731, 20);
+            this.instantCommand.TabIndex = 16;
+            this.instantCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.instantCommand_KeyDown);
+            // 
+            // commandLabel
+            // 
+            this.commandLabel.AutoSize = true;
+            this.commandLabel.Location = new System.Drawing.Point(0, 534);
+            this.commandLabel.Name = "commandLabel";
+            this.commandLabel.Size = new System.Drawing.Size(57, 13);
+            this.commandLabel.TabIndex = 17;
+            this.commandLabel.Text = "Command:";
+            // 
+            // programLabel
+            // 
+            this.programLabel.AutoSize = true;
+            this.programLabel.Location = new System.Drawing.Point(0, 438);
+            this.programLabel.Name = "programLabel";
+            this.programLabel.Size = new System.Drawing.Size(49, 13);
+            this.programLabel.TabIndex = 18;
+            this.programLabel.Text = "Program:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1046, 559);
+            this.Controls.Add(this.programLabel);
+            this.Controls.Add(this.commandLabel);
+            this.Controls.Add(this.instantCommand);
             this.Controls.Add(this.drawTriangle);
             this.Controls.Add(this.DrawLine);
             this.Controls.Add(this.Size);
@@ -303,6 +334,9 @@
         private System.Windows.Forms.Button drawTriangle;
         private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TextBox instantCommand;
+        private System.Windows.Forms.Label commandLabel;
+        private System.Windows.Forms.Label programLabel;
     }
 }
 
