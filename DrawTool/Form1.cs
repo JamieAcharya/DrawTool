@@ -70,8 +70,8 @@ namespace DrawTool
          */
         private void DrawCircle_Click(object sender, EventArgs e)
         {
-            //int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text); //getting coords straight from textbox
-            float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+            int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text); //getting coords straight from textbox
+            //float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
             int size = int.Parse(Size.Text);
             Circle circle = new Circle(x, y, size);
             group.Add(circle);
@@ -703,6 +703,23 @@ namespace DrawTool
             {
                 MessageBox.Show("Circle has a negative size", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 globalVariables.circle_size = 0;
+                converted = false;
+            }
+
+            return converted;
+        }
+
+        public bool ValidateMoveTo(float x, float y)
+        {
+            bool converted = true;
+
+            // x/y variables need to be postive or are reset to 0
+            if (x < 0 || y < 0)
+            {
+                
+                globalVariables.moveTo_x = 0;
+                globalVariables.moveTo_y = 0;
+                MessageBox.Show("MoveTo has to have postive Integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 converted = false;
             }
 
