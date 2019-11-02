@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-    //Creating and defining Triangle
+   /*
+   *  Triangle Shape class
+   * Setups constructors need to draw triangle (3 Sides)
+   */
     public class Triangle : Shape
     {
-        private Point[] trianglePoints;
+        private Point[] trianglePoints; //Array to Store given triangle coords
 
         public Triangle()
         {
         }
 
-        public Triangle(Point[] polygonPoints)
+        public Triangle(Point[] trianglePoints)
         {
-            this.trianglePoints = polygonPoints;
+            this.trianglePoints = trianglePoints;
         }
 
         public Triangle(float initP1, float initP2, float initP3)
@@ -32,6 +35,11 @@ namespace DrawTool
         public override void Display(Graphics drawArea)
         {
             drawArea.DrawPolygon(myPen, trianglePoints);
+        }
+
+        public override void set(params float[] list)
+        {
+            throw new NotImplementedException();
         }
     }
 }

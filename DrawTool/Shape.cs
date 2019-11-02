@@ -7,27 +7,31 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-    public abstract class Shape //Abstract Class
+    /*
+    * Shape Abstract class
+    * Sets up shape x,y coordinates and colour
+    * All derrived classes will implement these methods
+    */
+    public abstract class Shape : ShapesInterface //Abstract Class using inheritance
     {
         //Abstract method
-        protected float x, y, width, height;
+        protected float x, y;
         protected int size;
-        protected Pen myPen = new Pen(Color.Black);
-        public abstract void Display(Graphics drawArea);
+        protected float width, height;
+        protected Pen myPen = new Pen(Color.Black); //creates pen object setting colour to black
+        public abstract void Display(Graphics drawArea); //draws shape
         public Shape()
         {
         }
 
         public Shape(float x, float y)
         {
-            this.x = x;
-            this.y = y;
+            this.x = x; //x coord
+            this.y = y; //y coord
         }
-        public virtual void set(params float[] list)
-        {
 
-         
-        }
+        public abstract void set(params float[] list);
+
         protected float P1,P2,P3;
 
     }

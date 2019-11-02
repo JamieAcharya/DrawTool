@@ -12,9 +12,14 @@ using System.Windows.Forms;
 
 namespace DrawTool
 {
+   /*
+   *  Main Program Form Class
+   */
     public partial class Form1 : Form
     {
-
+        /*
+        *  Variables needed for all shapes
+        */
         public class globalVariables
         {
             public static float size { get; set; }
@@ -27,13 +32,13 @@ namespace DrawTool
             public static float moveTo_x = 0;
             public static float moveTo_y = 0;
 
-            //circle variables
+            //circle variable
             public static float circle_size { get; set; }
 
-            //circle variables
+            //square variable
             public static float square_size { get; set; }
 
-            //rectangle size
+            //rectangle variables
             public static float rectangle_width { get; set; }
             public static float rectangle_height { get; set; }
 
@@ -42,14 +47,15 @@ namespace DrawTool
             public static int p2 { get; set; }
             public static int p3 { get; set; }
            
-            
-            
             //line variable
             public static float line_size { get; set; }
             public static float line_x1 = 0;
             public static float line_y1 = 0;
 
         }
+        /*
+         * List array group to store all commands/shapes
+         */
         private List<Shape> group = new List<Shape>();
         public Form1()
         {
@@ -59,7 +65,9 @@ namespace DrawTool
 
 
 
-
+        /*
+         * Temporary Buttons for testing the drawing of different shapes
+         */
         private void DrawCircle_Click(object sender, EventArgs e)
         {
             //int x = int.Parse(xCoord.Text), y = int.Parse(yCoord.Text); //getting coords straight from textbox
@@ -86,7 +94,6 @@ namespace DrawTool
             group.Add(line);
             displayAll();
         }
-
          private void drawTriangle_Click(object sender, EventArgs e)
         {
             Point[] trianglePoints = new Point[3];
@@ -99,8 +106,11 @@ namespace DrawTool
 
 
         }
-
-        //grab commands/text from command line
+       
+        /*
+         * Button that executes code within program text area
+         * Stores commands and creates main shapes to be executed
+         */
         private void run_Click(object sender, EventArgs e)
         {
             foreach (string line in commandLine.Lines)
@@ -119,7 +129,7 @@ namespace DrawTool
 
                             string txtXCOORD = globalVariables.xCoords_Draw.ToString();
                             string txtYCOORD = globalVariables.yCoords_Draw.ToString();
-                            xCoord.Text = txtXCOORD;
+                            xCoord.Text = txtXCOORD; //sets xCoordinate textbox with new value
                             yCoord.Text = txtYCOORD;
 
                             continue;
@@ -128,7 +138,7 @@ namespace DrawTool
                     else
                     {
                         IndexOutOfRangeException argEx = new IndexOutOfRangeException();
-                        MessageBox.Show(argEx.Message + " moveTo command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(argEx.Message + " moveTo command error, please check number of parameters and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -165,7 +175,7 @@ namespace DrawTool
                     else
                     {
                         IndexOutOfRangeException argEx = new IndexOutOfRangeException();
-                        MessageBox.Show(argEx.Message + " circle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(argEx.Message + " circle command error, please check number of parameters and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -191,7 +201,7 @@ namespace DrawTool
                     else
                     {
                         IndexOutOfRangeException argEx = new IndexOutOfRangeException();
-                        MessageBox.Show(argEx.Message + " square command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(argEx.Message + " square command error, please check number of parameters and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -219,7 +229,7 @@ namespace DrawTool
                     else
                     {
                         IndexOutOfRangeException argEx = new IndexOutOfRangeException();
-                        MessageBox.Show(argEx.Message + " rectangle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(argEx.Message + " rectangle command error, please check number of parameters and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -280,14 +290,23 @@ namespace DrawTool
 
                     continue;
                 }
+                else if (command[0].ToLower().Equals("run"))
+                {
+
+                    continue;
+                }
                 else
                 {
-                    MessageBox.Show("Please Enter A vaild Command, see Help for command options", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please Enter A vaild Command(s), see Help for command options", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
                 }
 
             }
         }
+
+        /*
+         * Cycles through currently stored shapes and displays them when called
+         */
         private void displayAll()
         {
             Graphics paper = pictureBox1.CreateGraphics();
@@ -299,7 +318,9 @@ namespace DrawTool
 
 
 
-
+        /*
+         * Converts needed parameters for each shapes
+         */
         public bool ConvertMoveto(string x, string y)
         {
             bool converted = true;
@@ -370,7 +391,15 @@ namespace DrawTool
             return converted;
         }
 
-        //Exit Button Event (Exits Program)
+        /*
+         * Menu item events
+         * EXIT button event that exits application
+         * SAVE button event that presents user with Save dialogue on where to save the text in the Program textbox and saves it to a file
+         * LOAD button event that presents the User with a load dialogue on which a choosen file can be selected for text to be loaded into the program textbox area
+         * SAVE IMAGE event that lets the user save the currently drawn shapes (needs fixing)
+         * COMMAND Examples event that presents the user with a form of example commands and help
+         * TRACKBAR event that increases the sizeTextbox on scroll
+         */
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
@@ -405,22 +434,26 @@ namespace DrawTool
         }
         private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*
-            //pictureBox1.Image.Save(@"C:\Users\User\Desktop\drawTool.jpg", ImageFormat.Jpeg);
+            
             SaveFileDialog save = new SaveFileDialog();
-            save.FileName = "DrawToolImage.Jpeg";
-            save.Filter = "Image File | *.Jpeg";
+            save.FileName = "DrawToolImage.bmp";
+            save.Filter = "Image File | *.bmp";
             if (save.ShowDialog() == DialogResult.OK)
             {
-                pictureBox1.Image.Save(save.InitialDirectory, ImageFormat.Jpeg);
-                
+                Bitmap bmp = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
+                pictureBox1.DrawToBitmap(bmp, pictureBox1.ClientRectangle);
+                bmp.Save(save.FileName);
+               
+           
             }
-            */
+            
+            
         }
 
         private void commandExamplesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            CommandHelp frmCommandHelp = new CommandHelp();
+            frmCommandHelp.Show();
         }
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
@@ -428,6 +461,9 @@ namespace DrawTool
             Size.Text = trackBar1.Value.ToString();
         }
 
+         /*
+         * Instant Commands that are run when user hits enter on instantCommandLine textbox
+         */
 
         private void runProgram()
         {
@@ -470,8 +506,17 @@ namespace DrawTool
 
                         group.Add(new Line(x, y, size));
                         displayAll();
+
+                        continue;
+                    }
+                    else
+                    {
+                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                        MessageBox.Show(argEx.Message + " drawTo command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
+
                 else if (command[0].ToLower().Equals("circle"))
                 {
                     if (command.Length == 2)
@@ -616,6 +661,9 @@ namespace DrawTool
 
             }
         }
+        /*
+         * When the User hits enter the commands are entered and run
+         */
         private void instantCommand_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter)
@@ -623,6 +671,42 @@ namespace DrawTool
                 runProgram();
                 instantCommand.Text = "";
             }
+        }
+        /*
+         * Checks program textbox to see if run command is typed/entered
+         * If it is then program is run
+         */
+        private void commandLine_TextChanged(object sender, EventArgs e)
+        {
+        
+                foreach (string line in commandLine.Lines)
+                {
+                    string[] command = line.Split(' ');
+                    if (command[0].Equals("run"))
+                    {
+                        run.PerformClick();
+                    }
+                }
+        
+        }
+
+
+        /*
+         * Testing Parameters
+         */
+        public bool ValidateCircleSize(float circleSize)
+        {
+            bool converted = true;
+
+            // If the circle radius entered by the user is less than 0 then an error message is shown and the circle radius variable is reset to 0;
+            if (circleSize < 0)
+            {
+                MessageBox.Show("Circle has a negative size", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                globalVariables.circle_size = 0;
+                converted = false;
+            }
+
+            return converted;
         }
     }
 }

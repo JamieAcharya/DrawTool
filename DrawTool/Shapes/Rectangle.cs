@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-    //Creating and defining Circle
+   /*
+   *  Rectangle Shape class
+   * Setups constructors need to draw Rectangle (width & height)
+   */
     public class Rectangle : Shape
     {
         public Rectangle(float initX, float initY, float initHeight, float initWidth)
@@ -21,6 +24,12 @@ namespace DrawTool
         public override void Display(Graphics drawArea)
         {
             drawArea.DrawRectangle(myPen, x, y, width, height);
+        }
+
+        public override void set(params float[] list)
+        {
+            this.height = list[1];
+            this.width = list[2];
         }
     }
 }

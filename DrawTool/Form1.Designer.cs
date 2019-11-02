@@ -63,8 +63,10 @@
             this.commandLine.Location = new System.Drawing.Point(63, 435);
             this.commandLine.Multiline = true;
             this.commandLine.Name = "commandLine";
+            this.commandLine.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.commandLine.Size = new System.Drawing.Size(731, 90);
             this.commandLine.TabIndex = 1;
+            this.commandLine.TextChanged += new System.EventHandler(this.commandLine_TextChanged);
             // 
             // run
             // 
