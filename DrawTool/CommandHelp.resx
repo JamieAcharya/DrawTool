@@ -121,6 +121,7 @@
     <value>Example Commands:
 ***************************************************************
 Moves pen to x and y coordinate
+x = left/right y = up/down
 moveTo [x] [y]
 moveTo 100 100
 ***************************************************************
