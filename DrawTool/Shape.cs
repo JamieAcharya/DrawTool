@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
+    /// <summary>
+    /// Shape abstract class that sets up shape x , y, coordinates and colour
+    /// </summary>
+    
     /*
     * Shape Abstract class
     * Sets up shape x,y coordinates and colour
@@ -19,7 +23,12 @@ namespace DrawTool
         protected int size;
         protected float width, height;
         protected Pen myPen = new Pen(Color.Black); //creates pen object setting colour to black
+
         public abstract void Display(Graphics drawArea); //draws shape
+
+        /// <summary>
+        /// Shape Constructor
+        /// </summary>
         public Shape()
         {
         }

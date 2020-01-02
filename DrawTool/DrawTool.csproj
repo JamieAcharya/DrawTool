@@ -52,6 +52,7 @@
     <Compile Include="CommandHelp.Designer.cs">
       <DependentUpon>CommandHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions.cs" />
     <Compile Include="shapeFactory.cs" />
     <Compile Include="ShapesInterface.cs" />
     <Compile Include="Shapes\Circle.cs" />

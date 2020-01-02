@@ -34,7 +34,7 @@ namespace DrawTool
 
             //circle variable
             public static float circle_size { get; set; }
-
+            public static float ifVariable_Value { get; set; }
             //square variable
             public static float square_size { get; set; }
 
@@ -128,6 +128,7 @@ namespace DrawTool
         bool loopFlag = false;
         private void run_Click(object sender, EventArgs e)
         {
+
             foreach (string line in commandLine.Lines)
             {
                 //stores commands in array and splits them by space 
@@ -286,7 +287,42 @@ namespace DrawTool
                 /**
                  * Programming commands
                  */
+                //if command
+                else if (command[0].ToLower().Equals("if"))
+                {
+                    int ifVariableValue = 0;
+                    if (command.Length > 3)
+                    {
+                        try
+                        {
+                            globalVariables.ifVariable_Value = Convert.ToInt32(command[3]);
+                        }
+                        catch (FormatException ex)
+                        {
+                            MessageBox.Show(ex.Message + "If variable needs to be number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
 
+                       
+                        float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                                string ifVariable_Value = globalVariables.ifVariable_Value.ToString();
+                                int size = (int)globalVariables.ifVariable_Value;
+                        
+                        Circle circle = new Circle(x, y, size);
+                                group.Add(circle);
+                                pictureBox1.Refresh();
+                                displayAll();
+
+                                continue;
+                          
+                        }
+                }
+
+
+                else if (command[0].ToLower().Equals("method"))
+                {
+
+                }
 
                 //Loop commands
                 else if (command[0].ToLower().Equals("loop"))
@@ -313,9 +349,11 @@ namespace DrawTool
                             MessageBox.Show("Include endloop", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        // start and end loop contents
-                        string loopContents = commandLine.Text.Substring(loopStart, loopEnd - loopStart); // lenght cannot be < 0
-
+                       
+                            // start and end loop contents
+                            string loopContents = commandLine.Text.Substring(loopStart, loopEnd - loopStart); // length cannot be < 0
+                        
+                     
                         // The loop command is split on each line
                         string[] loopCommands = loopContents.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
@@ -514,10 +552,189 @@ namespace DrawTool
                                 if (loopCmd[0].ToLower().Equals("triangle"))
                                 {
                                 }
-                            }                                                      
+                                
+                                /**
+                                 * If command
+                                 */
+                                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                // If the loop command is for an if statement
+                                if (loopCmd[0].ToLower().Equals("if"))
+                                {
+                                    int loopCountParam = 0;
+
+                                    // If if command is a suitable length
+                                    if (loopCmd.Length >= 7)
+                                    {
+                                        // Converting loop counter number delcared in if command
+                                        try
+                                        {
+                                            loopCountParam = Convert.ToInt32(loopCmd[3]);
+                                        }
+                                        catch (FormatException ex)
+                                        {
+                                            MessageBox.Show(ex.Message + "Please ensure you have entered a number within the if command.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return;
+                                        }
+
+                                        // Validation checks for loop counter number
+                                        if (loopCountParam > globalVariables.loopIterations || loopCountParam < 0)
+                                        {
+                                            MessageBox.Show("Please enter a counter number equal to or less than the loop number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return;
+                                        }
+
+                                        // If loop count number declared by user is equal to loopCounter
+                                        if (Convert.ToInt32(loopCmd[3]) == loopCounter)
+                                        {
+                                            // If the if command is for a circle
+                                            if (loopCmd[4].ToLower().Equals("circle"))
+                                            {
+                                                int radius = 0;
+
+                                                // Convert circle radius to an int
+                                                try
+                                                {
+                                                    radius = Convert.ToInt32(loopCmd[7]);
+                                                }
+                                                catch (FormatException ex)
+                                                {
+                                                    MessageBox.Show(ex.Message + "Please ensure you have entered a number for the circle radius.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                    return;
+                                                }
+
+                                                if (ValidateCircleSize(radius))
+                                                {
+                                                    if (loopCmd[2].Equals("+"))
+                                                    {
+                                                        globalVariables.circle_size = globalVariables.circle_size += radius;
+
+                                                        Circle circle = new Circle(globalVariables.xCoords_Draw, globalVariables.yCoords_Draw, (int)globalVariables.circle_size);
+                                                        group.Add(circle);
+                                                        pictureBox1.Refresh();
+                                                        displayAll();
+
+                                                        continue;
+                                                    }
+                                                }
+                                            }
+                                            // If the if command is equal to a rectangle
+                                            if (loopCmd[4].ToLower().Equals("rectangle"))
+                                            {
+                                                int width = 0;
+                                                int height = 0;
+
+                                                // If the if command is of suitabe length
+                                                if (loopCmd.Length >= 7)
+                                                {
+                                                    if (loopCmd[5].ToLower().Equals("width"))
+                                                    {
+
+                                                        try
+                                                        {
+                                                            width = Convert.ToInt32(loopCmd[7]);
+                                                        }
+                                                        catch (FormatException ex)
+                                                        {
+                                                            MessageBox.Show(ex.Message + " Please ensure a number has been the width and height of the rectangle within the loop command.");
+                                                        }
+
+                                                        if (loopCmd[2].Equals("+"))
+                                                        {
+                                                            // increase rectangle width by integer declared in loop
+                                                            globalVariables.rectangle_width = globalVariables.rectangle_width += width;
+                                                        }
+                                                    }
+                                                    // increase rectangle height
+                                                    if (loopCmd[1].ToLower().Equals("height"))
+                                                    {
+                                                        // check height is an integer
+                                                        try
+                                                        {
+                                                            height = Convert.ToInt32(loopCmd[3]);
+                                                        }
+                                                        catch (FormatException ex)
+                                                        {
+                                                            MessageBox.Show(ex.Message + " Please ensure a number has been the width and height of the rectangle within the loop command.");
+                                                        }
+
+                                                        // increase rectangle height
+                                                        if (loopCmd[2].Equals("+"))
+                                                        {
+                                                            globalVariables.rectangle_height = globalVariables.rectangle_height += height;
+                                                        }
+                                                    }
+                                                    // increase rectangle width and height
+                                                    if (loopCmd.Length > 4)
+                                                    {
+                                                        if (loopCmd[4].ToLower().Equals("height"))
+                                                        {
+                                                            try
+                                                            {
+                                                                height = Convert.ToInt32(loopCmd[6]);
+                                                            }
+                                                            catch (FormatException ex)
+                                                            {
+                                                                MessageBox.Show(ex.Message + " Please ensure a number has been the width and height of the rectangle within the loop command.");
+                                                            }
+
+                                                            // If the height is being increased
+                                                            if (loopCmd[5].Equals("+"))
+                                                            {
+                                                                // increase height by number entered in loop
+                                                                globalVariables.rectangle_height = globalVariables.rectangle_height += height;
+                                                            }
+
+                                                        }
+                                                        // checks if rectangle parameter is set to width
+                                                        if (loopCmd[4].ToLower().Equals("width"))
+                                                        {
+                                                            try
+                                                            {
+                                                                width = Convert.ToInt32(loopCmd[6]);
+                                                            }
+                                                            catch (FormatException ex)
+                                                            {
+                                                                MessageBox.Show(ex.Message + " Please ensure a number has been the width and height of the rectangle within the loop command.");
+                                                            }
+
+                                                            // increase width
+                                                            if (loopCmd[5].Equals("+"))
+                                                            {
+                                                                globalVariables.rectangle_width = globalVariables.rectangle_width += width;
+                                                            }
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        ArgumentOutOfRangeException argEx = new ArgumentOutOfRangeException();
+                                                        MessageBox.Show(argEx.Message + "The rectangle command within the loop has been entered incorrectly.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                        return;
+                                                    }
+                                                    //globalVariables.square_size = globalVariables.square_size += loop_square_size;
+                                                    Rectangle rectangle = new Rectangle(globalVariables.xCoords_Draw, globalVariables.yCoords_Draw, globalVariables.rectangle_height, globalVariables.rectangle_width);
+                                                    group.Add(rectangle); ;
+                                                    pictureBox1.Refresh();
+                                                    displayAll();
+
+
+                                                    continue;
+                                                }
+                                            }
+                                    }
+                                    else
+                                    {
+                                        ArgumentOutOfRangeException argEx = new ArgumentOutOfRangeException();
+                                        MessageBox.Show(argEx.Message + "The if command entered is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }                                                      
                         }
                     }
-                } 
+                
 
 
 
@@ -529,7 +746,7 @@ namespace DrawTool
                     // globalVariables.xCoords_Draw = 0;
                     // globalVariables.yCoords_Draw = 0;
                     group.Clear();
-                    //pictureBox1.Image = null;
+                    pictureBox1.Image = null;
                     pictureBox1.Refresh();
 
                     continue;
@@ -544,6 +761,14 @@ namespace DrawTool
                     xCoord.Text = txtXCOORD;
                     yCoord.Text = txtYCOORD;
                     //pictureBox1.Refresh();
+
+                    continue;
+                }
+                else if(command[0].ToLower().Equals("rotate"))
+                {
+                  //  group.Add(circle);
+                    pictureBox1.Refresh();
+                    displayAll();
 
                     continue;
                 }
@@ -567,10 +792,15 @@ namespace DrawTool
         private void displayAll()
         {
             Graphics paper = pictureBox1.CreateGraphics();
+            
+           
             foreach (Shape shape in group)
             {
                 shape.Display(paper);
+                
+               
             }
+          
         }
 
 
@@ -592,7 +822,7 @@ namespace DrawTool
                 MessageBox.Show(ex.Message + " Please Enter Numbers for Coordinates.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 converted = false;
             }
-
+            
             return converted;
         }
 
@@ -689,16 +919,19 @@ namespace DrawTool
                 commandLine.Text = s;
             }
         }
+  
         private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+         
             SaveFileDialog save = new SaveFileDialog();
             save.FileName = "DrawToolImage.bmp";
             save.Filter = "Image File | *.bmp";
+            
             if (save.ShowDialog() == DialogResult.OK)
             {
                 Bitmap bmp = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
                 pictureBox1.DrawToBitmap(bmp, pictureBox1.ClientRectangle);
+                //pictureBox1.Image.Save("@C:/Users/kash/Desktop");
                 bmp.Save(save.FileName);
                
            
@@ -706,6 +939,7 @@ namespace DrawTool
             
             
         }
+
 
         private void commandExamplesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -982,9 +1216,43 @@ namespace DrawTool
 
             return converted;
         }
+
+        private void drawImageButton_Click(object sender, EventArgs e)
+        {
+            Bitmap newBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            Graphics g = Graphics.FromImage(newBitmap);
+            
+            displayAll();
+            newBitmap.Save(@"D:\\save.jpg");
+
+            //pictureBox1.Invalidate();
+            //load file and insert into commandLine textbox
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string sPath = ofd.FileName;
+                Image img1 = Image.FromFile(@sPath);
+
+                //imageList1.Images.AddRange(new Image[] { img1, img2 });
+                
+                Image choice = img1;
+
+                
+                pictureBox1.Image = choice;
+
+
+
+
+
+
+               
+            }
+           
+        }
     }
 }
 
 
 
 
+    

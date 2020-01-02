@@ -53,9 +53,12 @@
             this.instantCommand = new System.Windows.Forms.TextBox();
             this.commandLabel = new System.Windows.Forms.Label();
             this.programLabel = new System.Windows.Forms.Label();
+            this.drawImageButton = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // commandLine
@@ -175,7 +178,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1046, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1225, 24);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -278,11 +281,31 @@
             this.programLabel.TabIndex = 18;
             this.programLabel.Text = "Program:";
             // 
+            // drawImageButton
+            // 
+            this.drawImageButton.Location = new System.Drawing.Point(989, 144);
+            this.drawImageButton.Name = "drawImageButton";
+            this.drawImageButton.Size = new System.Drawing.Size(224, 129);
+            this.drawImageButton.TabIndex = 19;
+            this.drawImageButton.Text = "Draw Image";
+            this.drawImageButton.UseVisualStyleBackColor = true;
+            this.drawImageButton.Click += new System.EventHandler(this.drawImageButton_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(989, 279);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(208, 233);
+            this.pictureBox2.TabIndex = 20;
+            this.pictureBox2.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1046, 559);
+            this.ClientSize = new System.Drawing.Size(1225, 559);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.drawImageButton);
             this.Controls.Add(this.programLabel);
             this.Controls.Add(this.commandLabel);
             this.Controls.Add(this.instantCommand);
@@ -308,6 +331,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -339,6 +363,8 @@
         private System.Windows.Forms.TextBox instantCommand;
         private System.Windows.Forms.Label commandLabel;
         private System.Windows.Forms.Label programLabel;
+        private System.Windows.Forms.Button drawImageButton;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 
