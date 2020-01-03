@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-   /*
-   * Circle Shape class
-   * Setups constructors need to draw circle (size)
-   */
+    /// <summary>
+    /// Circle Shape class
+    /// Setups constructors need to draw circle(size)
+    /// </summary>
     public class Circle : Shape
     {
+        public Circle():base()
+        {
+        }
+
         public Circle(float initX, float initY, int initSize)
             : base(initX, initY)
         {

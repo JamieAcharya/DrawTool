@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-   /*
-   *  Triangle Shape class
-   * Setups constructors need to draw triangle (3 Sides)
-   */
+    /// <summary>
+    /// Triangle Shape class
+    /// Sets up constructor need to draw a Triangle (3 Sides)
+    /// </summary>
     public class Triangle : Shape
     {
         private Point[] trianglePoints; //Array to Store given triangle coords

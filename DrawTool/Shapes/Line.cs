@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-   /*
-   *  Line (drawTo) Shape class
-   * Setups constructors need to draw line (x & y coords)
-   */
+
+    /// <summary>
+    /// Line (drawTo) Shape class
+    /// Sets up constructors need to draw line(x and y coords)
+    /// </summary>
     public class Line : Shape
     {
+        public Line()
+        {
+        }
+
         public Line(float initX, float initY, int initSize)
             : base(initX, initY)
         {

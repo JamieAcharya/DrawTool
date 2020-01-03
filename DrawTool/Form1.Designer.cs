@@ -55,6 +55,7 @@
             this.programLabel = new System.Windows.Forms.Label();
             this.drawImageButton = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.backgroundColor_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -89,6 +90,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(731, 392);
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // DrawCircle
             // 
@@ -283,27 +285,38 @@
             // 
             // drawImageButton
             // 
-            this.drawImageButton.Location = new System.Drawing.Point(989, 144);
+            this.drawImageButton.Location = new System.Drawing.Point(1001, 144);
             this.drawImageButton.Name = "drawImageButton";
-            this.drawImageButton.Size = new System.Drawing.Size(224, 129);
+            this.drawImageButton.Size = new System.Drawing.Size(208, 129);
             this.drawImageButton.TabIndex = 19;
-            this.drawImageButton.Text = "Draw Image";
+            this.drawImageButton.Text = "Load Image";
             this.drawImageButton.UseVisualStyleBackColor = true;
             this.drawImageButton.Click += new System.EventHandler(this.drawImageButton_Click);
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(989, 279);
+            this.pictureBox2.Location = new System.Drawing.Point(1001, 279);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(208, 233);
             this.pictureBox2.TabIndex = 20;
             this.pictureBox2.TabStop = false;
+            // 
+            // backgroundColor_Button
+            // 
+            this.backgroundColor_Button.Location = new System.Drawing.Point(1001, 12);
+            this.backgroundColor_Button.Name = "backgroundColor_Button";
+            this.backgroundColor_Button.Size = new System.Drawing.Size(208, 22);
+            this.backgroundColor_Button.TabIndex = 23;
+            this.backgroundColor_Button.Text = "Change Background Color";
+            this.backgroundColor_Button.UseVisualStyleBackColor = true;
+            this.backgroundColor_Button.Click += new System.EventHandler(this.backgroundColor_Button_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1225, 559);
+            this.Controls.Add(this.backgroundColor_Button);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.drawImageButton);
             this.Controls.Add(this.programLabel);
@@ -365,6 +378,7 @@
         private System.Windows.Forms.Label programLabel;
         private System.Windows.Forms.Button drawImageButton;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button backgroundColor_Button;
     }
 }
 

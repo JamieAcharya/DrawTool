@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace DrawTool
 {
+    /// <summary>
+    /// Custom Generated Exception Handling
+    /// </summary>
     class Exceptions : Exception
     {
         /*
@@ -15,7 +18,7 @@ namespace DrawTool
             return MessageBox.Show("Please Enter A vaild Command, see Help for command options", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public NotFoundException(string message)
+        public FileIsNotImageException(string message)
             : base(message)
         {
         }

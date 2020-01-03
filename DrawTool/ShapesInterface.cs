@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-   /*
-   * Shape Interface class
-   * Creates Display method which all derrived classes need
-   */
+    /// <summary>
+    /// Shape Interface class
+    /// Creates Display method which all derrived classes need
+    /// </summary>
     interface ShapesInterface
     {
 

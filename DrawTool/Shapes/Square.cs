@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-   /*
-   *  Square Shape class
-   * Setups constructor need to draw square (size)
-   */
+    /// <summary>
+    /// Square Shape class
+    /// Sets up constructor need to draw square (size)
+    /// </summary>
     public class Square : Shape
     {
+        public Square()
+        {
+        }
+
         public Square(float initX, float initY, int initSize)
             : base(initX, initY)
         {

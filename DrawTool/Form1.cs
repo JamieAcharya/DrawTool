@@ -20,6 +20,9 @@ namespace DrawTool
         /*
         *  Variables needed for all shapes
         */
+        /// <summary>
+        /// Global Variables that are needed for shapes and commands
+        /// </summary>
         public class globalVariables
         {
             public static float size { get; set; }
@@ -69,7 +72,14 @@ namespace DrawTool
         /*
          * List array group to store all commands/shapes
          */
+        /// <summary>
+        /// Array list that stores all Shapes and Commands
+        /// </summary>
         private List<Shape> group = new List<Shape>();
+
+
+        shapeFactory sf = new shapeFactory();
+        Shape shape;
         public Form1()
         {
             InitializeComponent();
@@ -87,6 +97,8 @@ namespace DrawTool
             //float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
             int size = int.Parse(Size.Text);
             Circle circle = new Circle(x, y, size);
+            shape = sf.DrawShape("circle");
+            shape.set(x, y, size);
             group.Add(circle);
             displayAll();
         }
@@ -124,11 +136,14 @@ namespace DrawTool
          * Button that executes code within program text area
          * Stores commands and creates main shapes to be executed
          */
-        bool methodFlag = false;
-        bool loopFlag = false;
+        /// <summary>
+        /// Button that executes code within program text area
+        /// Stores commands and creates main shapes to be executed
+        /// </summary>
         private void run_Click(object sender, EventArgs e)
         {
-
+        bool methodFlag = false;
+        bool loopFlag = false;
             foreach (string line in commandLine.Lines)
             {
                 //stores commands in array and splits them by space 
@@ -181,6 +196,8 @@ namespace DrawTool
                             int size = (int)globalVariables.circle_size;
 
                             Circle circle = new Circle(x, y, size);
+                            shape = sf.DrawShape("circle");
+                            shape.set(x, y, size);
                             group.Add(circle);
                             pictureBox1.Refresh();
                             displayAll();
@@ -747,6 +764,7 @@ namespace DrawTool
                     // globalVariables.yCoords_Draw = 0;
                     group.Clear();
                     pictureBox1.Image = null;
+                    pictureBox1.BackColor = Color.DarkGray;
                     pictureBox1.Refresh();
 
                     continue;
@@ -786,17 +804,22 @@ namespace DrawTool
             }
         }
 
-        /*
-         * Cycles through currently stored shapes and displays them when called
-         */
+        /// <summary>
+        /// Cycles through currently stored shapes and displays them when called
+        /// </summary>
         private void displayAll()
         {
+
+            
             Graphics paper = pictureBox1.CreateGraphics();
+            
+            
             
            
             foreach (Shape shape in group)
             {
                 shape.Display(paper);
+                
                 
                
             }
@@ -878,15 +901,15 @@ namespace DrawTool
             return converted;
         }
 
-        /*
-         * Menu item events
-         * EXIT button event that exits application
-         * SAVE button event that presents user with Save dialogue on where to save the text in the Program textbox and saves it to a file
-         * LOAD button event that presents the User with a load dialogue on which a choosen file can be selected for text to be loaded into the program textbox area
-         * SAVE IMAGE event that lets the user save the currently drawn shapes (needs fixing)
-         * COMMAND Examples event that presents the user with a form of example commands and help
-         * TRACKBAR event that increases the sizeTextbox on scroll
-         */
+        /// <summary>
+        /// Menu item events
+        /// EXIT button event that exits application
+        /// SAVE button event that presents user with Save dialogue on where to save the text in the Program textbox and saves it to a file
+        /// LOAD button event that presents the User with a load dialogue on which a choosen file can be selected for text to be loaded into the program textbox area
+        /// SAVE IMAGE event that lets the user save the currently drawn shapes(needs fixing)
+        /// COMMAND Examples event that presents the user with a form of example commands and help
+        /// TRACKBAR event that increases the sizeTextbox on scroll
+        /// </summary>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
@@ -919,25 +942,33 @@ namespace DrawTool
                 commandLine.Text = s;
             }
         }
-  
+
+
+        /// <summary>
+        /// Save button that allows the user to save an image file of what is currently displayed within the main picturebox
+        /// </summary>
         private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-         
             SaveFileDialog save = new SaveFileDialog();
-            save.FileName = "DrawToolImage.bmp";
+            //save.FileName = "DrawToolImage.bmp";
+            save.FileName = "DrawToolImageNEW" + DateTime.Now.ToString("yyMMddHmmss") + ".bmp";
             save.Filter = "Image File | *.bmp";
-            
+
             if (save.ShowDialog() == DialogResult.OK)
             {
-                Bitmap bmp = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
-                pictureBox1.DrawToBitmap(bmp, pictureBox1.ClientRectangle);
-                //pictureBox1.Image.Save("@C:/Users/kash/Desktop");
-                bmp.Save(save.FileName);
-               
-           
+                Bitmap myBitmap;
+                Graphics g;
+                myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+                g = Graphics.FromImage(myBitmap);
+                pictureBox1.DrawToBitmap(myBitmap, pictureBox1.ClientRectangle);
+                foreach (Shape shape in group)
+                {
+                    shape.Display(g);
+                }
+                myBitmap.Save(save.FileName);
+
             }
-            
-            
         }
 
 
@@ -1217,37 +1248,63 @@ namespace DrawTool
             return converted;
         }
 
+        /// <summary>
+        /// Button that allows the user to select and image to be loaded in to the main picturebox
+        /// </summary>
         private void drawImageButton_Click(object sender, EventArgs e)
         {
-            Bitmap newBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            Graphics g = Graphics.FromImage(newBitmap);
-            
-            displayAll();
-            newBitmap.Save(@"D:\\save.jpg");
-
-            //pictureBox1.Invalidate();
-            //load file and insert into commandLine textbox
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string sPath = ofd.FileName;
                 Image img1 = Image.FromFile(@sPath);
-
-                //imageList1.Images.AddRange(new Image[] { img1, img2 });
-                
                 Image choice = img1;
-
-                
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                 pictureBox1.Image = choice;
-
-
-
-
-
-
-               
             }
            
+        }
+
+        /// <summary>
+        /// When the Main picturebox is clicked, a dialogue option appears allowing the user
+        ///  to save what is currently drawn.
+        /// </summary>
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.FileName = "DrawToolImageNEW" + DateTime.Now.ToString("yyMMddHmmss") + ".bmp";
+            save.Filter = "Image File | *.bmp";
+
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                Bitmap myBitmap;
+                Graphics g;
+                myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                g = Graphics.FromImage(myBitmap);
+                pictureBox1.DrawToBitmap(myBitmap, pictureBox1.ClientRectangle);
+                foreach (Shape shape in group)
+                {
+                    shape.Display(g);
+                }
+                myBitmap.Save(save.FileName);
+
+            }
+        }
+
+        /// <summary>
+        /// A Button that produces a color dialog interface that allows the user to change the current background of the main picturebox
+        /// </summary>
+        private void backgroundColor_Button_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+            //dlg.ShowDialog();
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.BackColor = dlg.Color;
+
+                
+            }
         }
     }
 }

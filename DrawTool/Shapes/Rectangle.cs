@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace DrawTool
 {
-   /*
-   *  Rectangle Shape class
-   * Setups constructors need to draw Rectangle (width & height)
-   */
+    /// <summary>
+    /// Rectangle Shape class
+    /// Sets up constructors need to draw line(Width and Height)
+    /// </summary>
     public class Rectangle : Shape
     {
+        public Rectangle()
+        {
+        }
+
         public Rectangle(float initX, float initY, float initHeight, float initWidth)
             : base(initX, initY)
         {

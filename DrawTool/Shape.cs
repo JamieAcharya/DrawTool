@@ -10,12 +10,6 @@ namespace DrawTool
     /// <summary>
     /// Shape abstract class that sets up shape x , y, coordinates and colour
     /// </summary>
-    
-    /*
-    * Shape Abstract class
-    * Sets up shape x,y coordinates and colour
-    * All derrived classes will implement these methods
-    */
     public abstract class Shape : ShapesInterface //Abstract Class using inheritance
     {
         //Abstract method
