@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace DrawTool
 {
-   /*
-   *  Main Program Form Class
-   */
+    /*
+    *  Main Program Form Class
+    */
     public partial class Form1 : Form
     {
         /*
@@ -119,7 +119,7 @@ namespace DrawTool
             group.Add(line);
             displayAll();
         }
-         private void drawTriangle_Click(object sender, EventArgs e)
+        private void drawTriangle_Click(object sender, EventArgs e)
         {
             Point[] trianglePoints = new Point[3];
             trianglePoints[0] = new Point(50, 150);
@@ -142,10 +142,15 @@ namespace DrawTool
         /// </summary>
         private void run_Click(object sender, EventArgs e)
         {
-        bool methodFlag = false;
-        bool loopFlag = false;
+            bool methodFlag = false;
+            bool loopFlag = false;
             foreach (string line in commandLine.Lines)
             {
+                if (line.Contains("endloop") || line.Contains("circle radius") || line.Contains("endif") || line.Contains("call") || line.Contains("rectangle width") || line.Contains("rectangle height")
+                    || line.Contains("square size"))
+                {
+                    continue;
+                }
                 //stores commands in array and splits them by space 
                 string[] command = line.Split(' ');
                 //if moveTo command is entered overwrite starting coordinates
@@ -299,8 +304,8 @@ namespace DrawTool
 
 
                 }
-                
-                
+
+
                 /**
                  * Programming commands
                  */
@@ -320,26 +325,176 @@ namespace DrawTool
                             return;
                         }
 
-                       
-                        float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
-                                string ifVariable_Value = globalVariables.ifVariable_Value.ToString();
-                                int size = (int)globalVariables.ifVariable_Value;
-                        
-                        Circle circle = new Circle(x, y, size);
-                                group.Add(circle);
-                                pictureBox1.Refresh();
-                                displayAll();
 
-                                continue;
-                          
-                        }
+                        float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                        string ifVariable_Value = globalVariables.ifVariable_Value.ToString();
+                        int size = (int)globalVariables.ifVariable_Value;
+
+                        Circle circle = new Circle(x, y, size);
+                        group.Add(circle);
+                        pictureBox1.Refresh();
+                        displayAll();
+
+                        continue;
+
+                    }
                 }
 
 
                 else if (command[0].ToLower().Equals("method"))
                 {
+                    if (command.Length == 2)
+                    {
+                        try
+                        {
+                            //globalVariables.loopIterations = Convert.ToInt32(command[2]);
 
+                            globalVariables.loopIterations = 1;
+                        }
+                        catch (FormatException ex)
+                        {
+                            MessageBox.Show(ex.Message + "Please ensure an unsigned integer has been used for loop command.");
+                            break;
+                        }
+
+                        int loopStart = commandLine.Text.IndexOf("method ") + "method ".Length;
+                        int loopEnd = commandLine.Text.LastIndexOf("call");
+
+
+                        // loopStart can not be less than zero, endloop must be entered
+                        if (loopStart <= 0)
+                        {
+                            throw new EndloopNotFoundException(loopEnd);
+                            //throw new ArgumentOutOfRangeException();
+                            MessageBox.Show("Include endloop", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        try
+                        {
+                            if (loopEnd <= 0)
+                            {
+
+                                throw new EndloopNotFoundException(loopEnd);
+                                //throw new ArgumentOutOfRangeException();
+                                //MessageBox.Show("Include endloop", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                //return;
+                            }
+                        }
+                        catch (EndloopNotFoundException)
+                        {
+                            break;
+                        }
+                        // start and end loop contents
+                        string loopContents = commandLine.Text.Substring(loopStart, loopEnd - loopStart); // length cannot be < 0
+
+
+                        // The loop command is split on each line
+                        string[] loopCommands = loopContents.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+                        int loopCounter = 0;
+
+                        for (int i = 0; i < globalVariables.loopIterations; i++)
+                        {
+                            loopCounter++;
+
+                            // foreach command in the loopCommand array
+                            foreach (string commandLoop in loopCommands)
+                            {
+                                string[] loopCmd = commandLoop.Split(' ');
+
+                                // If the loop command is for a circle
+                                if (loopCmd[0].ToLower().Equals("circle"))
+                                {
+                                    if (command.Length == 2)
+                                    {
+                                        if (ConvertCircleParameters(command[1]))
+                                        {
+                                            float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                                            string circle_size = globalVariables.circle_size.ToString();
+                                            int size = (int)globalVariables.circle_size;
+
+                                            Circle circle = new Circle(x, y, size);
+                                            shape = sf.DrawShape("circle");
+                                            shape.set(x, y, size);
+                                            group.Add(circle);
+                                            pictureBox1.Refresh();
+                                            displayAll();
+
+                                            continue;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                                        MessageBox.Show(argEx.Message + " circle command error, please check number of parameters and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return;
+                                    }
+                                    if (loopCmd[0].ToLower().Equals("square"))
+                                    {
+                                        if (command.Length == 2)
+                                        {
+                                            if (ConvertSquareParameters(command[1]))
+                                            {
+                                                float x = globalVariables.xCoords_Draw, y = globalVariables.yCoords_Draw;
+                                                string square_size = globalVariables.square_size.ToString();
+                                                int size = (int)globalVariables.square_size;
+
+                                                Square square = new Square(x, y, size);
+                                                group.Add(square);
+                                                pictureBox1.Refresh();
+                                                displayAll();
+
+                                                continue;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            IndexOutOfRangeException argEx = new IndexOutOfRangeException();
+                                            MessageBox.Show(argEx.Message + " square command error, please check number of parameters and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return;
+                                        }
+                                        if (loopCmd[0].ToLower().Equals("triangle"))
+                                        {
+                                            string p1, p2, p3;
+
+                                            try
+                                            {
+                                                p1 = command[1];
+                                                p2 = command[2];
+                                                p3 = command[3];
+                                            }
+                                            catch (IndexOutOfRangeException ex)
+                                            {
+                                                MessageBox.Show(ex.Message + " triangle command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                break;
+                                            }
+
+                                            globalVariables.p1 = Convert.ToInt32(p1);
+                                            globalVariables.p2 = Convert.ToInt32(p2);
+                                            globalVariables.p3 = Convert.ToInt32(p3);
+
+                                            Point[] trianglePoints = new Point[3];
+
+                                            trianglePoints[0] = new Point((int)globalVariables.xCoords_Draw, (int)globalVariables.yCoords_Draw);
+                                            trianglePoints[1] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p2, (int)globalVariables.yCoords_Draw);
+                                            trianglePoints[2] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p3, (int)globalVariables.yCoords_Draw - globalVariables.p3);
+
+                                            Triangle triangle = new Triangle(trianglePoints);
+                                            group.Add(triangle);
+                                            displayAll();
+                                            continue;
+
+
+                                        }
+                                    
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+
 
                 //Loop commands
                 else if (command[0].ToLower().Equals("loop"))
@@ -361,16 +516,33 @@ namespace DrawTool
 
 
                         // loopStart can not be less than zero, endloop must be entered
-                        if (loopStart < 0)
+                        if (loopStart <= 0)
                         {
+                            throw new EndloopNotFoundException(loopEnd);
+                            //throw new ArgumentOutOfRangeException();
                             MessageBox.Show("Include endloop", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                       
-                            // start and end loop contents
-                            string loopContents = commandLine.Text.Substring(loopStart, loopEnd - loopStart); // length cannot be < 0
-                        
-                     
+
+                        try
+                        {
+                            if (loopEnd <= 0)
+                            {
+
+                                throw new EndloopNotFoundException(loopEnd);
+                                //throw new ArgumentOutOfRangeException();
+                                //MessageBox.Show("Include endloop", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                //return;
+                            }
+                        }
+                        catch (EndloopNotFoundException)
+                        {
+                            break;
+                        }
+                        // start and end loop contents
+                        string loopContents = commandLine.Text.Substring(loopStart, loopEnd - loopStart); // length cannot be < 0
+
+
                         // The loop command is split on each line
                         string[] loopCommands = loopContents.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
@@ -569,11 +741,11 @@ namespace DrawTool
                                 if (loopCmd[0].ToLower().Equals("triangle"))
                                 {
                                 }
-                                
+
                                 /**
                                  * If command
                                  */
-                                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                 // If the loop command is for an if statement
                                 if (loopCmd[0].ToLower().Equals("if"))
                                 {
@@ -738,20 +910,20 @@ namespace DrawTool
                                                     continue;
                                                 }
                                             }
-                                    }
-                                    else
-                                    {
-                                        ArgumentOutOfRangeException argEx = new ArgumentOutOfRangeException();
-                                        MessageBox.Show(argEx.Message + "The if command entered is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        return;
+                                        }
+                                        else
+                                        {
+                                            ArgumentOutOfRangeException argEx = new ArgumentOutOfRangeException();
+                                            MessageBox.Show(argEx.Message + "The if command entered is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }                                                      
-                        }
                     }
-                
+                }
+
 
 
 
@@ -782,9 +954,9 @@ namespace DrawTool
 
                     continue;
                 }
-                else if(command[0].ToLower().Equals("rotate"))
+                else if (command[0].ToLower().Equals("rotate"))
                 {
-                  //  group.Add(circle);
+                    //  group.Add(circle);
                     pictureBox1.Refresh();
                     displayAll();
 

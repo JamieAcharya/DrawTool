@@ -12,21 +12,43 @@ namespace DrawTool
     /// </summary>
     class Exceptions : Exception
     {
-        /*
-        public EndloopNotFoundException()
-        {
-            return MessageBox.Show("Please Enter A vaild Command, see Help for command options", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        public FileIsNotImageException(string message)
-            : base(message)
-        {
-        }
-
-        public NotFoundException(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
-        */
     }
+}
+
+[Serializable]
+class EndloopNotFoundException : Exception
+{
+    public EndloopNotFoundException()
+    {
+        
+        MessageBox.Show("Include endloop", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        
+        return;
+    }
+
+
+    public EndloopNotFoundException(int endloop)
+        : base(String.Format("Endloop is an invalid integer (" + endloop.ToString() + ") Include endloop"))
+    {
+        MessageBox.Show("Endloop has an invalid value: " + endloop + " Make Sure you included endloop!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+    }
+}
+
+[Serializable]
+class InvalidFileTypeException : Exception
+{
+    public InvalidFileTypeException()
+    {
+        MessageBox.Show("File Is Not A Valid Image!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+    }
+
+    public InvalidFileTypeException(string message)
+        : base(String.Format("File Is Not A Valid Image!"))
+    {
+        MessageBox.Show("File Is Not A Valid Image!l", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+    }
+
 }
