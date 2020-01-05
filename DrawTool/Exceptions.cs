@@ -20,9 +20,9 @@ class EndloopNotFoundException : Exception
 {
     public EndloopNotFoundException()
     {
-        
+
         MessageBox.Show("Include endloop", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        
+
         return;
     }
 

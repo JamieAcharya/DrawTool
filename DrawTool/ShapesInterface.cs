@@ -14,8 +14,8 @@ namespace DrawTool
     interface ShapesInterface
     {
 
-            void set(params float[] list);
+        void set(params float[] list);
 
-            void Display(Graphics drawArea);
+        void Display(Graphics drawArea);
     }
 }

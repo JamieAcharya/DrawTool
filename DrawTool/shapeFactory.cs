@@ -26,7 +26,7 @@ namespace DrawTool
                     return new Triangle();
                 default:
                     return new Circle();
-            if(shapeName == null)
+                    if (shapeName == null)
                     {
                         ArgumentException argEx = new ArgumentException();
                         MessageBox.Show(argEx.Message + shapeName + " does not exist");

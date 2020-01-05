@@ -56,6 +56,7 @@
             this.drawImageButton = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.backgroundColor_Button = new System.Windows.Forms.Button();
+            this.rotate_Button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -311,11 +312,22 @@
             this.backgroundColor_Button.UseVisualStyleBackColor = true;
             this.backgroundColor_Button.Click += new System.EventHandler(this.backgroundColor_Button_Click);
             // 
+            // rotate_Button
+            // 
+            this.rotate_Button.Location = new System.Drawing.Point(1002, 46);
+            this.rotate_Button.Name = "rotate_Button";
+            this.rotate_Button.Size = new System.Drawing.Size(207, 23);
+            this.rotate_Button.TabIndex = 24;
+            this.rotate_Button.Text = "Mirror";
+            this.rotate_Button.UseVisualStyleBackColor = true;
+            this.rotate_Button.Click += new System.EventHandler(this.rotate_Button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1225, 559);
+            this.Controls.Add(this.rotate_Button);
             this.Controls.Add(this.backgroundColor_Button);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.drawImageButton);
@@ -379,6 +391,7 @@
         private System.Windows.Forms.Button drawImageButton;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button backgroundColor_Button;
+        private System.Windows.Forms.Button rotate_Button;
     }
 }
 

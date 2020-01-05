@@ -35,7 +35,7 @@ namespace DrawTool
 
         public abstract void set(params float[] list);
 
-        protected float P1,P2,P3;
+        protected float P1, P2, P3;
 
     }
 }

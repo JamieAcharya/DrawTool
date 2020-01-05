@@ -49,6 +49,7 @@ namespace DrawTool
             public static int p1 { get; set; }
             public static int p2 { get; set; }
             public static int p3 { get; set; }
+            public static int p4 { get; set; }
 
 
             public static int triangle_width;
@@ -305,6 +306,81 @@ namespace DrawTool
 
                 }
 
+                else if (command[0].ToLower().Equals("curve"))
+                {
+                    string p1, p2, p3, p4;
+
+                    try
+                    {
+                        p1 = command[1];
+                        p2 = command[2];
+                        p3 = command[3];
+                        p4 = command[4];
+                    }
+                    catch (IndexOutOfRangeException ex)
+                    {
+                        MessageBox.Show(ex.Message + " curve command error, please check number of variables and make sure they are postive integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    }
+                    int degrees = Int32.Parse(p2);
+                    double radians = degrees * Math.PI / 180.0;
+
+                    globalVariables.xCoords_Draw = Convert.ToInt32((float)Math.Cos(radians) * Int32.Parse(p1) + globalVariables.xCoords_Draw);
+                    globalVariables.yCoords_Draw = Convert.ToInt32((float)Math.Sin(-radians) * Int32.Parse(p1) + globalVariables.yCoords_Draw);
+
+                    globalVariables.p1 = Convert.ToInt32(p1);
+                    globalVariables.p2 = Convert.ToInt32(p2);
+                    globalVariables.p3 = Convert.ToInt32(p3);
+                    globalVariables.p4 = Convert.ToInt32(p4);
+
+                    Point[] curvePoints = new Point[4];
+
+                    curvePoints[0] = new Point((int)globalVariables.xCoords_Draw, (int)globalVariables.yCoords_Draw);
+                    curvePoints[1] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p2, (int)globalVariables.yCoords_Draw);
+                    curvePoints[2] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p3, (int)globalVariables.yCoords_Draw - globalVariables.p3);
+                    curvePoints[3] = new Point((int)globalVariables.xCoords_Draw + globalVariables.p4, (int)globalVariables.yCoords_Draw - globalVariables.p4);
+
+                    Curve curve = new Curve(curvePoints);
+                    group.Add(curve);
+                    displayAll();
+                    continue;
+
+
+                }
+
+                else if (command[0].ToLower().Equals("mirror"))
+                {
+                    foreach (Shape shape in group)
+                    {
+                        Bitmap myBitmap;
+                        Graphics g;
+                        myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                        g = Graphics.FromImage(myBitmap);
+                        pictureBox1.DrawToBitmap(myBitmap, pictureBox1.ClientRectangle);
+
+                        myBitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
+                        //myBitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        shape.Display(g);
+                        pictureBox1.Image = myBitmap;
+
+                    }
+                }
+                else if (command[0].ToLower().Equals("rotate"))
+                {
+                    Bitmap myBitmap;
+                    Graphics g;
+                    myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                    g = Graphics.FromImage(myBitmap);
+                    pictureBox1.DrawToBitmap(myBitmap, pictureBox1.ClientRectangle);
+                    foreach (Shape shape in group)
+                    {
+                        myBitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        //myBitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        shape.Display(g);
+                        pictureBox1.Image = myBitmap;
+
+                    }
+                }
 
                 /**
                  * Programming commands
@@ -487,7 +563,7 @@ namespace DrawTool
 
 
                                         }
-                                    
+
                                     }
                                 }
                             }
@@ -982,20 +1058,20 @@ namespace DrawTool
         private void displayAll()
         {
 
-            
+
             Graphics paper = pictureBox1.CreateGraphics();
-            
-            
-            
-           
+
+
+
+
             foreach (Shape shape in group)
             {
                 shape.Display(paper);
-                
-                
-               
+
+
+
             }
-          
+
         }
 
 
@@ -1017,7 +1093,7 @@ namespace DrawTool
                 MessageBox.Show(ex.Message + " Please Enter Numbers for Coordinates.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 converted = false;
             }
-            
+
             return converted;
         }
 
@@ -1100,7 +1176,7 @@ namespace DrawTool
                 writer.Close();
 
             }
-           // System.IO.File.WriteAllText(path, commandLine.Text);
+            // System.IO.File.WriteAllText(path, commandLine.Text);
             //System.IO.File.WriteAllText("C:\\Users\\User\\Desktop\\drawTool.dat", commandLine.Text);
         }
 
@@ -1155,9 +1231,9 @@ namespace DrawTool
             Size.Text = trackBar1.Value.ToString();
         }
 
-         /*
-         * Instant Commands that are run when user hits enter on instantCommandLine textbox
-         */
+        /*
+        * Instant Commands that are run when user hits enter on instantCommandLine textbox
+        */
 
         private void runProgram()
         {
@@ -1360,7 +1436,7 @@ namespace DrawTool
          */
         private void instantCommand_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 runProgram();
                 instantCommand.Text = "";
@@ -1372,16 +1448,16 @@ namespace DrawTool
          */
         private void commandLine_TextChanged(object sender, EventArgs e)
         {
-        
-                foreach (string line in commandLine.Lines)
+
+            foreach (string line in commandLine.Lines)
+            {
+                string[] command = line.Split(' ');
+                if (command[0].Equals("run"))
                 {
-                    string[] command = line.Split(' ');
-                    if (command[0].Equals("run"))
-                    {
-                        run.PerformClick();
-                    }
+                    run.PerformClick();
                 }
-        
+            }
+
         }
 
 
@@ -1410,7 +1486,7 @@ namespace DrawTool
             // x/y variables need to be postive or are reset to 0
             if (x < 0 || y < 0)
             {
-                
+
                 globalVariables.moveTo_x = 0;
                 globalVariables.moveTo_y = 0;
                 MessageBox.Show("MoveTo has to have postive Integers", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1434,7 +1510,7 @@ namespace DrawTool
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                 pictureBox1.Image = choice;
             }
-           
+
         }
 
         /// <summary>
@@ -1475,13 +1551,25 @@ namespace DrawTool
             {
                 pictureBox1.BackColor = dlg.Color;
 
-                
+
             }
+        }
+
+        private void rotate_Button_Click(object sender, EventArgs e)
+        {
+            Bitmap myBitmap;
+            Graphics g;
+            myBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            g = Graphics.FromImage(myBitmap);
+            pictureBox1.DrawToBitmap(myBitmap, pictureBox1.ClientRectangle);
+            //g.TranslateTransform(0, pictureBox1.Height);
+
+            foreach (Shape shape in group)
+            {
+                shape.Display(g);
+                myBitmap.RotateFlip(RotateFlipType.Rotate180FlipY);
+            }
+            pictureBox1.Image = myBitmap;
         }
     }
 }
-
-
-
-
-    

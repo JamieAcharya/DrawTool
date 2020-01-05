@@ -13,7 +13,7 @@ namespace DrawTool
     /// </summary>
     public class Circle : Shape
     {
-        public Circle():base()
+        public Circle() : base()
         {
         }
 

@@ -11,30 +11,31 @@ namespace DrawTool
     /// Triangle Shape class
     /// Sets up constructor need to draw a Triangle (3 Sides)
     /// </summary>
-    public class Triangle : Shape
+    public class Curve : Shape
     {
-        private Point[] trianglePoints; //Array to Store given triangle coords
+        private Point[] curvePoints; //Array to Store given triangle coords
 
-        public Triangle()
+        public Curve()
         {
         }
 
-        public Triangle(Point[] trianglePoints)
+        public Curve(Point[] curvePoints)
         {
-            this.trianglePoints = trianglePoints;
+            this.curvePoints = curvePoints;
         }
 
-        public Triangle(float initP1, float initP2, float initP3)
+        public Curve(float initP1, float initP2, float initP3)
             : base()
         {
             P1 = initP1;
             P2 = initP2;
             P3 = initP3;
 
+
         }
         public override void Display(Graphics drawArea)
         {
-            drawArea.DrawPolygon(myPen, trianglePoints);
+            drawArea.DrawCurve(myPen, curvePoints);
         }
 
         public override void set(params float[] list)
@@ -43,4 +44,3 @@ namespace DrawTool
         }
     }
 }
-
