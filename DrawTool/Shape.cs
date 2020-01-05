@@ -12,7 +12,9 @@ namespace DrawTool
     /// </summary>
     public abstract class Shape : ShapesInterface //Abstract Class using inheritance
     {
+
         //Abstract method
+        
         protected float x, y;
         protected int size;
         protected float width, height;

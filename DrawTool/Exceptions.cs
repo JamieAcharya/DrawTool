@@ -47,7 +47,7 @@ class InvalidFileTypeException : Exception
     public InvalidFileTypeException(string message)
         : base(String.Format("File Is Not A Valid Image!"))
     {
-        MessageBox.Show("File Is Not A Valid Image!l", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show("File Is Not A Valid Image!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
     }
 

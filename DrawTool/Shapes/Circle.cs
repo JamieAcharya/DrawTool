@@ -13,6 +13,9 @@ namespace DrawTool
     /// </summary>
     public class Circle : Shape
     {
+        /// <summary>
+        /// Base Constructor for Shape Circle
+        /// </summary>
         public Circle() : base()
         {
         }

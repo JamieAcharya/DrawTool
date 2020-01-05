@@ -15,6 +15,9 @@ namespace DrawTool
     /*
     *  Main Program Form Class
     */
+    /// <summary>
+    /// Main Form Program Class
+    /// </summary>
     public partial class Form1 : Form
     {
         /*
@@ -81,6 +84,9 @@ namespace DrawTool
 
         shapeFactory sf = new shapeFactory();
         Shape shape;
+        /// <summary>
+        /// Initializes Main Form Component for Displaying GUI
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -821,7 +827,6 @@ namespace DrawTool
                                 /**
                                  * If command
                                  */
-                                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                 // If the loop command is for an if statement
                                 if (loopCmd[0].ToLower().Equals("if"))
                                 {
@@ -1502,13 +1507,23 @@ namespace DrawTool
         private void drawImageButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image files|*.bmp;*.jpg;*.gif;*.png;*.tif|All files|*.*";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string sPath = ofd.FileName;
-                Image img1 = Image.FromFile(@sPath);
-                Image choice = img1;
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                pictureBox1.Image = choice;
+                try
+                {
+                    Image img1 = Image.FromFile(@sPath);
+                    Image choice = img1;
+
+                    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pictureBox1.Image = choice;
+                }
+                catch(OutOfMemoryException)
+                {
+                    MessageBox.Show("File must be an image!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //throw new InvalidFileTypeException();
+                }
             }
 
         }
